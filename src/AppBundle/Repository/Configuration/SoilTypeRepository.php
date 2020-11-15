@@ -86,6 +86,47 @@ class SoilTypeRepository extends EntityRepository
     }
 
 
+    public function getRegionSoilProfileGeometry()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT soil_type,main_type,map_color,'region' AS level,
+                     ST_AsGeoJSON(ST_Transform(geom,4326)) 
+                     FROM spd_tanzania_soil_profile p, cfg_soil_types t
+                     WHERE  t.code=p.soil_type";
+
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function setSpatialFilterOptions($options, QueryBuilder $queryBuilder)
+    {
+        if(!empty($options['regionCode']))
+        {
+            $queryBuilder
+                ->join()
+                ->Where('lower(t.name) LIKE lower(:name)')
+                ->setParameter('name','%'.$options['name'].'%');
+        }
+        return $queryBuilder;
+    }
+
+
+
     public function getData()
     {
         $conn = $this->getEntityManager()->getConnection();

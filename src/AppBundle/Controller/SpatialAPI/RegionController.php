@@ -49,8 +49,6 @@ class RegionController extends Controller
         $response = $em->getRepository('AppBundle:Location\Region')
             ->getRegionSpatialStatistics([]);
 
-        $response = $em->getRepository('AppBundle:Configuration\SoilType')
-            ->getSoilProfileGeometry([]);
 
         $leafletTransformer = $this->get('app.helper.leaflet_data_transformer');
 

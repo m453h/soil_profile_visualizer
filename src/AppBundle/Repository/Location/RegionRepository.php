@@ -102,10 +102,6 @@ class RegionRepository extends EntityRepository
         $queryBuilder->select("region_name,
                                r.region_code,
                                'region' AS level,
-                               r.region_code AS results,
-                               SUM (CASE WHEN status = '1' THEN 1 ELSE 0 END) AS \"Active\",
-                               SUM (CASE WHEN status = '2' THEN 1 ELSE 0 END) AS \"Recovered\",
-                               SUM (CASE WHEN status = '3' THEN 1 ELSE 0 END) AS \"Fatal\", 
                                ST_AsGeoJSON(ST_Transform(region_geometry,4326))
                                ")
             ->from('tbl_cases', 'c')

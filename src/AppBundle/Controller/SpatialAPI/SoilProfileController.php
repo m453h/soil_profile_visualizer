@@ -18,36 +18,16 @@ class SoilProfileController extends Controller
 {
 
     /**
-     * @Route("/spatialAPI/get-soil-profile-list", options={"expose"=true},name="soil_profile_spatial_data")
-     * @return Response
-     *
-     */
-    public function listAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $response = $em->getRepository('AppBundle:Location\Region')
-            ->getRegionGeometry([]);
-
-        $leafletTransformer = $this->get('app.helper.leaflet_data_transformer');
-
-        $response = $leafletTransformer->formatArrayToString($response);
-
-        return new Response($response);
-    }
-
-
-    /**
      * @Route("/spatialAPI/get-soil-profile-spatial-report", options={"expose"=true},name="soil_profile_spatial_statistics")
+     * @param Request $request
      * @return Response
-     *
      */
-    public function getRegionSpatialStatisticsAction()
+    public function getRegionSpatialStatisticsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $response = $em->getRepository('AppBundle:Location\Region')
-            ->getRegionSpatialStatistics([]);
+        $response = $em->getRepository('AppBundle:Configuration\SoilType')
+              ->getRegionSoilProfileGeometry();
 
         $leafletTransformer = $this->get('app.helper.leaflet_data_transformer');
 

@@ -1,7 +1,10 @@
 var map, districtLayer, wardLayer, mapPerspective, mapDataType;
-var defaultDataFields = ['soil_type', 'main_type','map_color', 'level'];
+var defaultDataFields = ["region_name", "region_code", "level"];
 var defaultDistrictFields = ["region_name","district_name", "district_code", "level", "results", 'active_cases', 'recovered_cases', 'fatal_cases'];
 var defaultWardFields = ["region_name","ward_name", "ward_code", "level", "results", 'active_cases', 'recovered_cases', 'fatal_cases'];
+
+var defaultSoilDataFields = ['soil_type', 'main_type', 'map_color','level'];
+
 // control that shows state info on hover
 var info = L.control();
 
@@ -9,10 +12,8 @@ var info = L.control();
 
 $(document).ready(function () {
 
-    mapPerspective = 'total';
-    $('#total').addClass('active');
-
-   // $("#graph-content").hide();
+    mapPerspective = 'region-data';
+    $('#region-data').addClass('active');
 
     $('.map-menu-item').click(function () {
 
@@ -20,42 +21,33 @@ $(document).ready(function () {
 
         $(this).addClass('active');
 
-        if (mapPerspective === "total")
+        if (mapPerspective === 'region-data')
         {
-            $('#active').removeClass('active');
-            $('#recovered').removeClass('active');
-            $('#fatal').removeClass('active');
+            $('#district-data').removeClass('active');
+            $('#ward-data').removeClass('active');
         }
-        else if (mapPerspective === "active")
+        else if (mapPerspective === 'district-data')
         {
-            $('#total').removeClass('active');
-            $('#recovered').removeClass('active');
-            $('#fatal').removeClass('active');
+            $('#region-data').removeClass('active');
+            $('#ward-data').removeClass('active');
         }
-        else if (mapPerspective === "recovered")
+        else if (mapPerspective === 'ward-data')
         {
-            $('#total').removeClass('active');
-            $('#active').removeClass('active');
-            $('#fatal').removeClass('active');
-        }
-        else if (mapPerspective === "fatal")
-        {
-            $('#total').removeClass('active');
-            $('#active').removeClass('active');
-            $('#recovered').removeClass('active');
+            $('#district-data').removeClass('active');
+            $('#region-data').removeClass('active');
         }
 
         //Clear the map and reload
         map.remove();
-        renderMap('map-render', 'region_spatial_statistics',defaultDataFields, "country");
+        renderMap('map-render', 'region_spatial_statistics',defaultDataFields, 'country');
     });
 
-    $(".ward-key").hide();
-    $(".region-key").hide();
-    $(".constituency-key").hide();
+    $('.ward-key').hide();
+    $('.region-key').hide();
+    $('.constituency-key').hide();
 
 
-    renderMap('map-render', 'region_spatial_statistics',defaultDataFields, "country");
+    renderMap('map-render', 'soil_profile_spatial_statistics',defaultSoilDataFields, 'country');
 
 });
 
@@ -104,7 +96,7 @@ function fetchMapData(route, value, fields, layerLevel) {
         error: function () {
             alert('Failed');
         }
-    })
+    });
 }
 
 function sketchMapData(data, fields, layerLevel) {
@@ -153,8 +145,8 @@ function sketchMapData(data, fields, layerLevel) {
     var mapDataLayer = L.geoJson(geoJSON, {
         pointToLayer: function (feature, point) {
             var markerStyle = {
-                fillColor: "#CC9900",
-                color: "#FFF",
+                fillColor: '#CC9900',
+                color: '#FFF',
                 fillOpacity: 0.5,
                 opacity: 0.8,
                 weight: 1,
@@ -211,8 +203,6 @@ function highlightFeature(e) {
 
     info.update(layer.feature.properties);
 
-
-
     //refreshChart(layer.feature.properties);
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
@@ -223,9 +213,9 @@ function highlightFeature(e) {
 
 function resetHighlight(e) {
 
-    $(".ward-key").hide();
-    $(".region-key").hide();
-    $(".district-key").hide();
+    $('.ward-key').hide();
+    $('.region-key').hide();
+    $('.district-key').hide();
 
     var layer = e.target;
 
@@ -258,9 +248,18 @@ function zoomToFeature(e) {
     {
         if (layerLevel === 'region')
         {
-            value = e.target.feature.properties.region_code;
-            route = 'district_spatial_statistics';
-            fields = defaultDistrictFields;
+            if(mapPerspective=='region-data')
+            {
+                value = e.target.feature.properties.region_code;
+                route = 'soil_profile_spatial_statistics';
+                fields = defaultRegionSoilDataFields;
+            }
+            else
+            {
+                value = e.target.feature.properties.region_code;
+                route = 'district_spatial_statistics';
+                fields = defaultDistrictFields;
+            }
         }
         else if (layerLevel === 'district')
         {
@@ -296,8 +295,15 @@ function addMapInformationLayer(layer, properties) {
 
         html += property + ": " + properties[property] + "<br>";
 
-        fillColor = properties.map_color;
 
+        if (typeof properties.map_color == 'undefined')
+        {
+            fillColor = '#919191';
+        }
+        else
+        {
+            fillColor = properties.map_color;
+        }
 
         /*if (typeof properties.region_name !== 'undefined')
         {

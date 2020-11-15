@@ -107,7 +107,7 @@ class SoilTypeController extends Controller
         {
             $soilType = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            dump($soilType);
+
             $em->persist($soilType);
             $em->flush();
 
