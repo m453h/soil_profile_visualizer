@@ -1,0 +1,42 @@
+#User Roles
+AppBundle\Entity\UserAccounts\Role:
+    role_administrator:
+      roleId: 1
+      roleName: Administrator
+
+#Dummy User Accounts
+AppBundle\Entity\UserAccounts\User:
+    user_0:
+        # use some fake data for this
+        email: mnkotagu+1@gmail.com
+        plainPassword: password
+        username: admin
+        fullName: <firstName()> <lastName()>
+        mobilePhone: 255754<numberBetween(100000, 999999)>
+        accountStatus: A
+        loginTries: 0
+        lastActivity: '<dateTimeBetween("-1 days", "now")>'
+
+#Dummy User Account Roles
+AppBundle\Entity\UserAccounts\UserRole:
+    user_role_administrator:
+        # use some fake data for this
+        user: '@user_0'
+        role: '@role_administrator'
+
+#User Roles Permissions
+AppBundle\Entity\UserAccounts\Permission:
+    permission_0:
+      object: AppBundle\Controller\ResultsManagement\PartyController
+      actions: ['view','edit']
+      role: '@role_administrator'
+
+    permission_1:
+      object: AppBundle\Controller\News\TopicController
+      actions: ['view','add','edit','delete']
+      role: '@role_administrator'
+
+    permission_2:
+      object: AppBundle\Controller\News\NewsController
+      actions: ['view','add','edit','delete','info']
+      role: '@role_administrator'

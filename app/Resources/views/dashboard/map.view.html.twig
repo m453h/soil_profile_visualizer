@@ -1,0 +1,17 @@
+<div id="map-content" class="container">
+    <div class="space-20"></div>
+    <h1 class="styled-header no-border-bottom">MAP OF COVID-19 CASES IN TANZANIA</h1>
+    <h3 class="styled-header">Select case(s) type:</h3>
+    <ul class="map-menu">
+        <li><a href="#" data-layer-type="total"  class="map-menu-item" id="total">Total Cases</a></li>
+        <li><a href="#" data-layer-type="active" class="map-menu-item" id="active">Active Cases</a></li>
+        <li><a href="#" data-layer-type="recovered" class="map-menu-item" id="recovered">Recovered Cases</a></li>
+        <li><a href="#" data-layer-type="fatal"  class="map-menu-item" id="fatal">Fatal Cases</a></li>
+    </ul>
+    <div class="clear"></div>
+
+    <div id="map-render">
+        <div id="map-loader" class="align-center"><img src="{{ asset('images/loaders/ie_loader.gif') }}" alt="Loading"></div>
+    </div>
+
+</div>

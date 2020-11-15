@@ -1,0 +1,6 @@
+<td>{{ counter }}</td>
+<td>{% if record.username is not null %}{{ record.username }}{% else %}<i>NOT SET</i>{% endif %}</td>
+<td>{{ record.full_name }}</td>
+<td>{{ record.mobile_phone }}</td>
+<td>{% if record.account_status == "A" %}<span class="label green">Active</span>{% elseif record.account_status == "I"%}<span class="label yellow">Inactive</span>{% else %}<span class="label red">Blocked</span>{% endif %} </td>
+<td>{{ record.roles }}</td>

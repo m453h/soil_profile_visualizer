@@ -1,0 +1,51 @@
+Location:
+    Country:
+      roleClass: AppBundle\Controller\Location\CountryController
+      actions: ["view","add","edit","delete"]
+      key: country
+
+    Region:
+      roleClass: AppBundle\Controller\Location\RegionController
+      actions: ["view"]
+      key: region
+
+    District:
+      roleClass: AppBundle\Controller\Location\DistrictController
+      actions: ["view"]
+      key: district
+
+    Wards:
+      roleClass: AppBundle\Controller\Location\WardController
+      actions: ["view"]
+      key: ward
+
+    Nationality:
+      roleClass: AppBundle\Controller\Configuration\NationalityController
+      actions: ["view","add","edit","delete"]
+      key: nationality
+
+
+
+
+Data:
+    CaseFolder:
+      roleClass: AppBundle\Controller\Data\CaseFolderController
+      actions: ["view","add","edit","delete","more"]
+      key: case-folder
+
+    CaseFolderDetails:
+      roleClass: AppBundle\Controller\Data\CaseDetailsController
+      actions: ["view","add","edit","delete"]
+      key: case-folder-details
+
+
+Accounts:
+    Users:
+      roleClass: AppBundle\Controller\UserAccounts\UserController
+      actions: ["view","add","edit","delete","info","approve","decline"]
+      key: users
+
+    Roles:
+      roleClass: AppBundle\Controller\UserAccounts\RoleController
+      actions: ["view","add","edit","delete"]
+      key: role-configuration

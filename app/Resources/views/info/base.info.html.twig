@@ -1,0 +1,7 @@
+<ul class="list-styled">
+    {% for record in info.getTextElements() %}
+        {% for key,value in record %}
+            <li class="fade"><span class="title">{{ key }}:</span>{{ value }}</li>
+        {% endfor %}
+    {% endfor %}
+</ul>

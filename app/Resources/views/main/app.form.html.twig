@@ -1,0 +1,36 @@
+{% extends 'main/app.base.html.twig' %}
+
+{% block title %}{{ app_name }} | {{ title }}{% endblock %}
+
+ {% block stylesheets %}
+     {{ parent() }}
+ {% endblock %}
+
+{% block content %}
+     {{ parent() }}
+
+<div class="panel">
+    <div class="panel-title col12">
+        <div class="container"><h1>{{ title }}</h1></div>
+    </div>
+
+     <div class="white-space panel-body">
+         <div class="container">
+             <div class="clear space-20"></div>
+             <div class="{% if isFullWidth is defined %}col12 {% else %}col6{% endif %} user-form">
+                 {{ include("forms/#{ formTemplate }.form.html.twig") }}
+             </div>
+             <div class='clear space-20'></div>
+         </div>
+
+     </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+     {{ parent() }}
+     <script src="{{ asset('js/ajax.js') }}"></script>
+{% endblock %}
+

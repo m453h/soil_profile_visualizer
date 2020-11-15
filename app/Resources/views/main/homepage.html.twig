@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="login-area">
+        <div class="section-inner-small">
+            <div class="col12 space-30 no-mobile"></div>
+
+            <div class="col6 no-mobile align-justify">
+                <div class="app-name">
+                    <h2>Welcome to Tanzania<span class="green-highlight"> Soil </span>Mapper</h2>
+                    <div class="app-underline"></div>
+                </div>
+               <p class="light-text">
+                   Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                   sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                   Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                   Duis aute irure dolor in reprehenderit in
+                   voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+               </p>
+            </div>
+
+            <div class="col1">
+                <div class='space-30'></div>
+            </div>
+
+            <div class="col5 last white-background">
+                <div class="login-container drop-shadow-2">
+                    {% set hasFlashBag = false %}
+
+                    {% for msg in app.session.flashBag.get('error') %}
+                        {% set hasFlashBag = true %}
+                        <p class="alert-small alert-failure"> {{ msg }}</p>
+                    {% endfor %}
+
+                    {% for msg in app.session.flashBag.get('info') %}
+                        {% set hasFlashBag = true %}
+                        <p class="alert-small alert-info"> {{ msg }}</p>
+                    {% endfor %}
+
+                    {% if error %}
+                        <p class="alert-small alert-failure">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+                    {%  else %}
+                        {% if hasFlashBag==false %}
+                            <p class="alert-small alert-info"> Provide your credentials to login the system</p>
+                        {% endif %}
+                    {% endif %}
+
+                    {{ form_start(form) }}
+                    {{ form_row(form._username) }}
+                    {{ form_row(form._password) }}
+                    <button type="submit" class="btn btn-primary fade" formnovalidate>Login <span class="fa fa-lock"></span></button>
+                    {{ form_end(form) }}
+                </div>
+
+            </div>
+            <div class="clear"></div>
+            <div class="space-30"></div>
+
+
+        </div>
+
+
+    </div>
+    <div class='col12 align-center login-footer'>
+        <div class="space-10"></div>
+        <div class='section-inner'>
+            <p>Copyright &copy; {{ 'now'|date('Y') }} <b>Soil Mapper</b> All Rights Reserved.</p>
+        </div>
+    </div>
+
+{% endblock %}

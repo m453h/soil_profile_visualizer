@@ -1,0 +1,37 @@
+{% extends 'main/app.base.html.twig' %}
+
+{% block title %}{{ app_name }}{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+
+    {% block dashboard %}
+        <div class="col12 white-space drop-shadow">
+            <div class="col8">
+                <div class="container">
+                        <div class="space-20"></div>
+                        <h1 class="styled-header no-border-bottom">COVID-19 CASES IN TANZANIA</h1>
+                        <h3 class="styled-header">Select case(s) type:</h3>
+                        <ul class="map-menu">
+                            <li><a href="#" data-layer-type="total"  class="map-menu-item" id="total">Total Cases</a></li>
+                            <li><a href="#" data-layer-type="active" class="map-menu-item" id="active">Active Cases</a></li>
+                            <li><a href="#" data-layer-type="recovered" class="map-menu-item" id="recovered">Recovered Cases</a></li>
+                            <li><a href="#" data-layer-type="fatal"  class="map-menu-item" id="fatal">Fatal Cases</a></li>
+                        </ul>
+                        <div class="clear"></div>
+
+                    <div id="map-render"></div>
+
+                </div>
+            </div>
+            <div class="col4 last">
+                <div class="space"></div>
+                <div id="statistics">
+                </div>
+            </div>
+            <div class="col12 space-20"></div>
+        </div>
+
+    {% endblock %}
+
+{% endblock %}

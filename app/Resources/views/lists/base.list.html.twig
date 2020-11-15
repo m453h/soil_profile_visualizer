@@ -1,0 +1,7 @@
+{% for element in record %}
+    {% if loop.index==1 %}
+        <td>{{ counter }}</td>
+    {% else %}
+        <td>{{ element }}</td>
+    {% endif %}
+{% endfor %}

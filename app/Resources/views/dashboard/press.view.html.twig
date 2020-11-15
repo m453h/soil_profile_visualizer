@@ -1,0 +1,26 @@
+<div id="press-release-content" class="container">
+    <div class="space-20"></div>
+    <h1 class="styled-header no-border-bottom">UPDATES ON COVID-19 CASES IN TANZANIA</h1>
+    <div class="space-20"></div>
+
+    <div class="clear"></div>
+    <ul class="press-releases">
+
+    {% for item in extra.records %}
+        <li>
+            <div class="date-block align-center drop-shadow">
+                <div class="month-block">
+                    <h3>{{ item.folder_open_date|date("M")|upper }}</h3>
+                </div>
+                <div class="day-block">
+                    <h3>{{ item.folder_open_date|date("d")|upper }}</h3>
+                </div>
+            </div>
+            <div class="description-block"><a href="#" class="styled-link">Click to view press release</a> or <a href="#" class="styled-link">Watch video</a></div>
+        </li>
+    {% endfor %}
+    </ul>
+    <div class="pagination-list">
+        {{ pagerfanta(extra.pagerFantaItems,'twitter_bootstrap3_translated') }}
+    </div>
+</div>

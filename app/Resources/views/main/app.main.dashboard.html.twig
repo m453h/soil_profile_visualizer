@@ -1,0 +1,390 @@
+{% extends 'main/app.base.html.twig' %}
+
+{% block title %}{{ app_name }} | Dashboard{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+
+    {% block dashboard %}
+        <div class="col3 dashboard-stat dash-red">
+            <div class="visual">
+                <i class="fa fa-calculator"></i>
+            </div>
+            <div class="details">
+                <h2 class="data-counter">{{ statistics.Total }}</h2>
+                <p class="desc">Total Cases </p>
+            </div>
+        </div>
+        <div class="col3 dashboard-stat dash-yellow">
+            <div class="visual">
+                <i class="fa fa-medkit"></i>
+            </div>
+            <div class="details">
+                <h2 class="data-counter">{{ statistics.Active }}</h2>
+                <p class="desc">Active Cases </p>
+            </div>
+        </div>
+
+
+        <div class="col3 dashboard-stat dash-green">
+            <div class="visual">
+                <i class="fa fa-check"></i>
+            </div>
+            <div class="details">
+                <h2 class="data-counter">{{ statistics.Recovered }}</h2>
+                <p class="desc">Recovered Cases </p>
+            </div>
+        </div>
+        <div class="col3 dashboard-stat dash-purple last">
+            <div class="visual">
+                <i class="fa fa-times"></i>
+            </div>
+            <div class="details">
+                <h2 class="data-counter">{{ statistics.Fatal }}</h2>
+                <p class="desc">Fatal Cases </p>
+            </div>
+        </div>
+
+        <div class="col12 space-30"></div>
+        <div class="col12">
+            <ul class="app-menu">
+                <li class="fade app-menu-item" id="map-view"><a href="{{ path('app_home_page',{'view':'map'}) }}"><span class="icon-spacer-right"><i class="fa fa-map" aria-hidden="true"></i></span>Map</a></li>
+                <li class="fade app-menu-item" id="graph-view"><a href="{{ path('app_home_page',{'view':'graphs'}) }}"><span class="icon-spacer-right"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>Graphs</a></li>
+                <li class="fade app-menu-item" id="press-view"><a href="{{ path('app_home_page',{'view':'press-releases'}) }}"><span class="icon-spacer-right"><i class="fa fa-bullhorn" aria-hidden="true"></i></span>Press Releases</a></li>
+            </ul>
+        </div>
+
+        <div class="col12 white-space drop-shadow">
+            <div class="col12">
+                {% include miniTemplate  %}
+
+            </div>
+            <div class="col4 last">
+                <div class="space-20"></div>
+
+                <div class="space"></div>
+            </div>
+        </div>
+        <div class="col12 space-30"></div>
+
+    {% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if view=='graphs' %}
+        <script type="text/javascript">
+        $(document).ready(function () {
+
+            setTimeout(function () {
+
+                // based on prepared DOM, initialize echarts instance
+                var myChart = echarts.init(document.getElementById('canvasTotal'));
+
+                // specify chart configuration item and data
+                var option = {
+                    color:["#E7505A"],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        },
+                        formatter: 'Cumulative cases on {b0} are {c0}'
+                    },
+                    title: {
+                        text: 'Cumulative Total Number of Cases',
+                        left: 'center',
+                    },
+                    toolbox:
+                        {
+                            show : false,
+                            feature : {
+                                mark : {show: false},
+                                dataView : {show: false, readOnly: true},
+                                magicType : {show: true, type: ['line', 'bar']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}}
+                        },
+                    legend: {
+                        data:['Total number of cases']
+                    },
+                    xAxis: {
+                        data: [{{ extra.dates|raw }}],
+                        type: 'category',
+                        name :'Date',
+                        axisLabel: {
+                            show: true,
+                            interval: '0',
+                            margin: 10,
+                            clickable: false,
+                            formatter: null,
+                            rotate:75,
+                            textStyle: {
+                                fontFamily: 'Arial, Verdana',
+                                fontSize: 9,
+                                fontStyle: 'normal',
+                                fontWeight: 'normal'
+                            }
+                        }
+
+                    },
+                    yAxis: {
+                        name :'Cases'
+                    },
+                    series: [{
+                        type: 'line',
+                        barWidth: '30%',
+                        data: [{{ extra.cumulativeTotals }}]
+                    }
+                    ]
+                };
+
+                // use configuration item and data specified to show chart
+                myChart.setOption(option);
+
+                $(window).on('resize', function(){
+                    if(myChart != null && myChart != undefined){
+                        myChart.resize();
+                    }
+                });
+
+
+            }, 100);
+
+
+            setTimeout(function () {
+
+                // based on prepared DOM, initialize echarts instance
+                var myChart = echarts.init(document.getElementById('canvasDaily'));
+
+                // specify chart configuration item and data
+                var option = {
+                    color:["#f39c12"],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        },
+                        formatter: 'Cumulative cases on {b0} are {c0}'
+                    },
+                    title: {
+                        text: 'Daily Reported Number of Cases',
+                        left: 'center'
+                    },
+                    toolbox:
+                        {
+                            show : false,
+                            feature : {
+                                mark : {show: false},
+                                dataView : {show: false, readOnly: true},
+                                magicType : {show: true, type: ['line', 'bar']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}}
+                        },
+                    legend: {
+                        data:['Total number of cases']
+                    },
+                    xAxis: {
+                        data: [{{ extra.dates|raw }}],
+                        type: 'category',
+                        name :'Date',
+                        axisLabel: {
+                            show: true,
+                            interval: '0',
+                            margin: 10,
+                            clickable: false,
+                            formatter: null,
+                            rotate:75,
+                            textStyle: {
+                                fontFamily: 'Arial, Verdana',
+                                fontSize: 9,
+                                fontStyle: 'normal',
+                                fontWeight: 'normal'
+                            }
+                        }
+
+                    },
+                    yAxis: {
+                        name :'Cases'
+                    },
+                    series: [{
+                        type: 'bar',
+                        barWidth: '30%',
+                        data: [{{ extra.dailyCases }}]
+                    }
+                    ]
+                };
+
+                // use configuration item and data specified to show chart
+                myChart.setOption(option);
+
+                $(window).on('resize', function(){
+                    if(myChart != null && myChart != undefined){
+                        myChart.resize();
+                    }
+                });
+
+
+            }, 100);
+
+
+            setTimeout(function () {
+
+                // based on prepared DOM, initialize echarts instance
+                var myChart = echarts.init(document.getElementById('canvasFatal'));
+
+                // specify chart configuration item and data
+                var option = {
+                    color:["#8E44AD"],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        },
+                        formatter: 'Cumulative fatal cases on {b0} are {c0}'
+                    },
+                    title: {
+                        text: 'Cumulative Total Number of Fatal Cases',
+                        left: 'center'
+                    },
+                    toolbox:
+                        {
+                            show : false,
+                            feature : {
+                                mark : {show: false},
+                                dataView : {show: false, readOnly: true},
+                                magicType : {show: true, type: ['line', 'bar']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}}
+                        },
+                    legend: {
+                        data:['Total number of fatal cases']
+                    },
+                    xAxis: {
+                        data: [{{ extra.dates|raw }}],
+                        type: 'category',
+                        name :'Date',
+                        axisLabel: {
+                            show: true,
+                            interval: '0',
+                            margin: 10,
+                            clickable: false,
+                            formatter: null,
+                            rotate:75,
+                            textStyle: {
+                                fontFamily: 'Arial, Verdana',
+                                fontSize: 9,
+                                fontStyle: 'normal',
+                                fontWeight: 'normal'
+                            }
+                        }
+
+                    },
+                    yAxis: {
+                        name :'Cases'
+                    },
+                    series: [{
+                        type: 'line',
+                        barWidth: '30%',
+                        data: [{{ extra.cumulativeFatal }}]
+                    }
+                    ]
+                };
+
+                // use configuration item and data specified to show chart
+                myChart.setOption(option);
+
+                $(window).on('resize', function(){
+                    if(myChart != null && myChart != undefined){
+                        myChart.resize();
+                    }
+                });
+
+
+            }, 100);
+
+
+            setTimeout(function () {
+
+                // based on prepared DOM, initialize echarts instance
+                var myChart = echarts.init(document.getElementById('canvasRecovered'));
+
+                // specify chart configuration item and data
+                var option = {
+                    color:["#16a085"],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        },
+                        formatter: 'Cumulative recovered cases on {b0} are {c0}'
+                    },
+                    title: {
+                        text: 'Cumulative Total Number of Recovered Cases',
+                        left: 'center'
+                    },
+                    toolbox:
+                        {
+                            show : false,
+                            feature : {
+                                mark : {show: false},
+                                dataView : {show: false, readOnly: true},
+                                magicType : {show: true, type: ['line', 'bar']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}}
+                        },
+                    legend: {
+                        data:['Total number of recovered cases']
+                    },
+                    xAxis: {
+                        data: [{{ extra.dates|raw }}],
+                        type: 'category',
+                        name :'Date',
+                        axisLabel: {
+                            show: true,
+                            interval: '0',
+                            margin: 10,
+                            clickable: false,
+                            formatter: null,
+                            rotate:75,
+                            textStyle: {
+                                fontFamily: 'Arial, Verdana',
+                                fontSize: 9,
+                                fontStyle: 'normal',
+                                fontWeight: 'normal'
+                            }
+                        }
+
+                    },
+                    yAxis: {
+                        name :'Cases'
+                    },
+                    series: [{
+                        type: 'line',
+                        barWidth: '30%',
+                        data: [{{ extra.cumulativeFatal }}]
+                    }
+                    ]
+                };
+
+                // use configuration item and data specified to show chart
+                myChart.setOption(option);
+
+                $(window).on('resize', function(){
+                    if(myChart != null && myChart != undefined){
+                        myChart.resize();
+                    }
+                });
+
+
+            }, 100);
+
+
+        });
+
+
+
+    </script>
+    {% endif %}
+{% endblock %}

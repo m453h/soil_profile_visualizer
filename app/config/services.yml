@@ -1,0 +1,113 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+services:
+    app.menu_builder:
+        class: AppBundle\Menu\MenuBuilder
+        autowire: true
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
+
+    app.security.login_form_authenticator:
+      class: AppBundle\Security\LoginFormAuthenticator
+      autowire: true
+
+    app.security.acl_provider:
+          class: AppBundle\Security\ACLSecurityProvider
+          autowire: true
+
+    app.security.authentication_failure_event_listener:
+      class: AppBundle\Security\AuthenticationFailureListener
+      autowire: true
+      tags:
+      - {name: kernel.event_subscriber}
+
+    security.user_checker:
+        class: AppBundle\Security\UserChecker
+        arguments: [ "app.security.login_form_authenticator:", "" ]
+
+    app.twig.menu_extension:
+        class: AppBundle\Twig\MenuExtension
+        arguments:
+            - '@knp_menu.helper'
+            - '@knp_menu.matcher'
+        tags:
+            - { name: twig.extension }
+
+    app.helper.grid_builder:
+        class: AppBundle\Helpers\GridBuilder
+        autowire: true
+
+    app.helper.info_builder:
+            class: AppBundle\Helpers\InfoBuilder
+            autowire: true
+
+    app.helper.image_uploader:
+                class: AppBundle\Helpers\ImageUploader
+                autowire: true
+
+    app.helper.leaflet_data_transformer:
+                class: AppBundle\Helpers\LeafletDataTransformer
+                autowire: true
+
+    app.helper.file_loader:
+            class: AppBundle\Helpers\FileLoader
+            autowire: true
+
+    app.helper.audit_trail_logger:
+        class: AppBundle\Helpers\AuditTrailLogger
+        autowire: true
+
+    app.acl_voter:
+            class: AppBundle\Security\ACLVoter
+            autowire: true
+            tags:
+                - { name: security.voter }
+            # small performance boost
+            public: false
+
+    app.helper.file_format_verifier:
+            class: AppBundle\Helpers\CSVFormatVerifier
+            autowire: true
+
+    app.helper.dashboard_grid_builder:
+            class: AppBundle\Helpers\DashboardGridBuilder
+            autowire: true
+
+    jsor_doctrine_postgis_doctrine_orm_schema_subscriber:
+          class: 'Jsor\Doctrine\PostGIS\Event\ORMSchemaEventSubscriber'
+          public: false
+          tags:
+              - { name: doctrine.event_subscriber, connection: default }
+
+
+    app.form.type.role_form:
+                class: AppBundle\Form\Accounts\RolePermissionFormType
+                arguments:
+                    - '@doctrine.orm.entity_manager'
+                    - '@app.helper.file_loader'
+                    - '%permissions_file%'
+                    - '@request_stack'
+                tags:
+                    - { name: form.type }
+
+
+    app.form.type.portal_user_account_form:
+                class: AppBundle\Form\Accounts\UserFormType
+                autowire: true
+                tags:
+                    - { name: form.type }
+
+
+    app.form.type.staff_role:
+                class: AppBundle\Form\Accounts\UserRoleFormType
+                autowire: true
+                tags:
+                    - { name: form.type }
+

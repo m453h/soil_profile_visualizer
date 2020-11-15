@@ -1,0 +1,6 @@
+<td>{{ counter }}</td>
+<td>{{ record.region_name }}</td>
+<td>{{ record.district_name }}</td>
+<td>{{ record.ward_name }}</td>
+<td>{{ record.age }}</td>
+<td>{% if record.status == "1" %}<span class="label yellow">Active</span>{% elseif record.status == "2"%}<span class="label yellow">Recovered</span>{% elseif record.status == "3"%}<span class="label purple">Fatal</span>{% endif %}</td>

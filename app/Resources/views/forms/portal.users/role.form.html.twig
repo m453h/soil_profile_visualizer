@@ -1,0 +1,26 @@
+
+{{ form_start(form) }}
+
+{{ form_row(form.role.roleName) }}
+
+<div id="accordion">
+    {% for key,value in permissions %}
+    {% set stepCounter=0 %}
+
+      <h3>{{ key }} Permissions</h3>
+
+      <div>
+        {% for item in value %}
+
+            {%  set stepCounter=stepCounter+1 %}
+
+            {{ form_row(attribute(form, item.key)) }}
+
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+</div>
+<div class="space-20"></div>
+<button type="submit" class="btn btn-primary" formnovalidate>Save</button>
+{{ form_end(form) }}

@@ -1,0 +1,338 @@
+.sm-oda {
+    /*background:#008F56;*/
+}
+.sm-oda a, .sm-oda a:hover, .sm-oda a:focus, .sm-oda a:active {
+  padding: 13px 20px;
+  /* make room for the toggle button (sub indicator) */
+  padding-right: 58px;
+  color: #000;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 17px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.sm-oda a:active,.sm-oda a:focus{
+  color:#FFF;
+}
+.sm-oda a.current {
+  color: #D23600;
+
+}
+.sm-oda a.disabled {
+  color: #bbbbbb;
+}
+.sm-oda a .sub-arrow {
+  position: absolute;
+  top: 50%;
+  margin-top: -17px;
+  left: auto;
+  right: 4px;
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+  font: bold 16px/34px monospace !important;
+  text-align: center;
+  text-shadow: none;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+}
+.sm-oda a .sub-arrow::before {
+  content: '+';
+}
+.sm-oda a.highlighted .sub-arrow::before {
+  content: '-';
+}
+.sm-oda > li:first-child > a, .sm-oda > li:first-child > :not(ul) a {
+  border-radius: 5px 5px 0 0;
+}
+.sm-oda > li:last-child > a, .sm-oda > li:last-child > *:not(ul) a, .sm-oda > li:last-child > ul, .sm-oda > li:last-child > ul > li:last-child > a, .sm-oda > li:last-child > ul > li:last-child > *:not(ul) a, .sm-oda > li:last-child > ul > li:last-child > ul, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > a, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > *:not(ul) a, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > a, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > *:not(ul) a, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > ul, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > a, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > *:not(ul) a, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > ul {
+  border-radius: 0 0 5px 5px;
+}
+.sm-oda > li:last-child > a.highlighted, .sm-oda > li:last-child > *:not(ul) a.highlighted, .sm-oda > li:last-child > ul > li:last-child > a.highlighted, .sm-oda > li:last-child > ul > li:last-child > *:not(ul) a.highlighted, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > a.highlighted, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > *:not(ul) a.highlighted, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > a.highlighted, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > *:not(ul) a.highlighted, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > a.highlighted, .sm-oda > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > ul > li:last-child > *:not(ul) a.highlighted {
+  border-radius: 0;
+}
+.sm-oda li {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.sm-oda > li:first-child {
+  border-top: 0;
+}
+.sm-oda ul {
+  background: rgba(162, 162, 162, 0.1);
+}
+.sm-oda ul a, .sm-oda ul a:hover, .sm-oda ul a:focus, .sm-oda ul a:active {
+  font-size: 16px;
+  border-left: 8px solid transparent;
+}
+.sm-oda ul ul a,
+.sm-oda ul ul a:hover,
+.sm-oda ul ul a:focus,
+.sm-oda ul ul a:active {
+  border-left: 16px solid transparent;
+}
+.sm-oda ul ul ul a,
+.sm-oda ul ul ul a:hover,
+.sm-oda ul ul ul a:focus,
+.sm-oda ul ul ul a:active {
+  border-left: 24px solid transparent;
+}
+.sm-oda ul ul ul ul a,
+.sm-oda ul ul ul ul a:hover,
+.sm-oda ul ul ul ul a:focus,
+.sm-oda ul ul ul ul a:active {
+  border-left: 32px solid transparent;
+}
+.sm-oda ul ul ul ul ul a,
+.sm-oda ul ul ul ul ul a:hover,
+.sm-oda ul ul ul ul ul a:focus,
+.sm-oda ul ul ul ul ul a:active {
+  border-left: 40px solid transparent;
+}
+
+@media (min-width: 768px) {
+  /* Switch to desktop layout
+  -----------------------------------------------
+     These transform the menu tree from
+     collapsible to desktop (navbar + dropdowns)
+  -----------------------------------------------*/
+  /* start... (it's not recommended editing these rules) */
+  .sm-oda ul {
+    position: absolute;
+    width: 12em;
+  }
+
+  .sm-oda li {
+    float: left;
+  }
+
+  .sm-oda.sm-rtl li {
+    float: right;
+  }
+
+  .sm-oda ul li, .sm-oda.sm-rtl ul li, .sm-oda.sm-vertical li {
+    float: none;
+  }
+
+  .sm-oda a {
+    white-space: nowrap;
+  }
+
+  .sm-oda ul a, .sm-oda.sm-vertical a {
+    white-space: normal;
+  }
+
+  .sm-oda .sm-nowrap > li > a, .sm-oda .sm-nowrap > li > :not(ul) a {
+    white-space: nowrap;
+  }
+
+  /* ...end */
+  .sm-oda {
+    padding: 4px 10px;
+  }
+  .sm-oda a, .sm-oda a:hover, .sm-oda a:focus, .sm-oda a:active, .sm-oda a.highlighted {
+    /*padding: 12px 12px;
+    color: #FFFFFF;
+    border-radius: 0 !important;*/
+      padding: 16px 12px;
+      color: #000;
+      border-radius: 0 !important;
+      margin-top: -4px;
+      font-weight:bolder;
+      text-transform: capitalize;
+  }
+  .sm-oda a:hover, .sm-oda a:focus, .sm-oda a:active, .sm-oda a.highlighted {
+    color: #C0392B;
+  }
+  .sm-oda a.current {
+    color: #D23600;
+  }
+  .sm-oda a.disabled {
+    color: #bbbbbb;
+  }
+  .sm-oda a.has-submenu {
+    padding-right: 24px;
+  }
+  .sm-oda a .sub-arrow {
+    top: 50%;
+    margin-top: -2px;
+    right: 12px;
+    width: 0;
+    height: 0;
+    border-width: 4px;
+    border-style: solid dashed dashed dashed;
+    border-color: #000000 transparent transparent transparent;
+    background: transparent;
+    border-radius: 0;
+  }
+  .sm-oda a .sub-arrow::before {
+    display: none;
+  }
+  .sm-oda li {
+    border-top: 0;
+  }
+  .sm-oda > li > ul::before,
+  .sm-oda > li > ul::after {
+    content: '';
+    position: absolute;
+    top: -18px;
+    left: 30px;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    border-width: 9px;
+    border-style: dashed dashed solid dashed;
+    border-color: transparent transparent #bbbbbb transparent;
+  }
+  .sm-oda > li > ul::after {
+    top: -16px;
+    left: 31px;
+    border-width: 8px;
+    border-color: transparent transparent #fff transparent;
+  }
+  .sm-oda ul {
+    border: 1px solid #bbbbbb;
+    padding: 5px 0;
+    background: #fff;
+    border-radius: 5px !important;
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.2);
+  }
+  .sm-oda ul a, .sm-oda ul a:hover, .sm-oda ul a:focus, .sm-oda ul a:active, .sm-oda ul a.highlighted {
+    border: 0 !important;
+    padding: 10px 20px;
+    color: #555555;
+    font-size: 1em;
+    text-transform: capitalize;
+  }
+  .sm-oda ul a:hover, .sm-oda ul a:focus, .sm-oda ul a:active, .sm-oda ul a.highlighted {
+    background: #C0392B;
+    color: #FFFFFF;
+  }
+  ul.menu_level_1 li.current{
+      background: #f1f6ff;
+  }
+  .sm-oda ul a.disabled {
+    background: #fff;
+    color: #cccccc;
+  }
+  .sm-oda ul a.has-submenu {
+    padding-right: 20px;
+  }
+  .sm-oda ul a .sub-arrow {
+    right: 8px;
+    top: 50%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: dashed dashed dashed solid;
+    border-color: transparent transparent transparent #555555;
+  }
+    .sm-oda ul a:hover .sub-arrow,.sm-oda ul a.highlighted .sub-arrow{
+        border-color: transparent transparent transparent #FFFFFF;
+    }
+  .sm-oda .scroll-up,
+  .sm-oda .scroll-down {
+    position: absolute;
+    display: none;
+    visibility: hidden;
+    overflow: hidden;
+    background: #fff;
+    height: 20px;
+  }
+  .sm-oda .scroll-up:hover,
+  .sm-oda .scroll-down:hover {
+    background: #eeeeee;
+  }
+  .sm-oda .scroll-up:hover .scroll-up-arrow {
+    border-color: transparent transparent #D23600 transparent;
+  }
+  .sm-oda .scroll-down:hover .scroll-down-arrow {
+    border-color: #D23600 transparent transparent transparent;
+  }
+  .sm-oda .scroll-up-arrow,
+  .sm-oda .scroll-down-arrow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -6px;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    border-width: 6px;
+    border-style: dashed dashed solid dashed;
+    border-color: transparent transparent #555555 transparent;
+  }
+  .sm-oda .scroll-down-arrow {
+    top: 8px;
+    border-style: solid dashed dashed dashed;
+    border-color: #555555 transparent transparent transparent;
+  }
+  .sm-oda.sm-rtl a.has-submenu {
+    padding-right: 12px;
+    padding-left: 24px;
+  }
+  .sm-oda.sm-rtl a .sub-arrow {
+    right: auto;
+    left: 12px;
+  }
+  .sm-oda.sm-rtl.sm-vertical a.has-submenu {
+    padding: 10px 20px;
+  }
+  .sm-oda.sm-rtl.sm-vertical a .sub-arrow {
+    right: auto;
+    left: 8px;
+    border-style: dashed solid dashed dashed;
+    border-color: transparent #555555 transparent transparent;
+  }
+  .sm-oda.sm-rtl > li > ul::before {
+    left: auto;
+    right: 30px;
+  }
+  .sm-oda.sm-rtl > li > ul::after {
+    left: auto;
+    right: 31px;
+  }
+  .sm-oda.sm-rtl ul a.has-submenu {
+    padding: 10px 20px !important;
+  }
+  .sm-oda.sm-rtl ul a .sub-arrow {
+    right: auto;
+    left: 8px;
+    border-style: dashed solid dashed dashed;
+    border-color: transparent #555555 transparent transparent;
+  }
+  .sm-oda.sm-vertical {
+    padding: 10px 0;
+    border-radius: 5px;
+  }
+  .sm-oda.sm-vertical a {
+    padding: 10px 20px;
+  }
+  .sm-oda.sm-vertical a:hover, .sm-oda.sm-vertical a:focus, .sm-oda.sm-vertical a:active, .sm-oda.sm-vertical a.highlighted {
+    background: #fff;
+  }
+  .sm-oda.sm-vertical a.disabled {
+    background: #eeeeee;
+  }
+  .sm-oda.sm-vertical a .sub-arrow {
+    right: 8px;
+    top: 50%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: dashed dashed dashed solid;
+    border-color: transparent transparent transparent #555555;
+  }
+  .sm-oda.sm-vertical > li > ul::before,
+  .sm-oda.sm-vertical > li > ul::after {
+    display: none;
+  }
+  .sm-oda.sm-vertical ul a {
+    padding: 10px 20px;
+  }
+  .sm-oda.sm-vertical ul a:hover, .sm-oda.sm-vertical ul a:focus, .sm-oda.sm-vertical ul a:active, .sm-oda.sm-vertical ul a.highlighted {
+    background: #eeeeee;
+  }
+  .sm-oda.sm-vertical ul a.disabled {
+    background: #fff;
+  }
+}
+

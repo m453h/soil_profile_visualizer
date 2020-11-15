@@ -1,0 +1,115 @@
+{% extends 'main/app.base.html.twig' %}
+
+{% block title %}{{ app_name }} | {{ title }}{% endblock %}
+
+ {% block stylesheets %}
+     {{ parent() }}
+ {% endblock %}
+
+{% block content %}
+     {{ parent() }}
+<div class="panel">
+     <div class="panel-title">
+         <div class="container"><h1>{{ title }}</h1></div>
+     </div>
+
+     <div class="white-background panel-body">
+         <div class="container">
+             <div class="clear space-10"></div>
+             {{ include("main/app.flash.message.html.twig") }}
+             <div class="clear space-10"></div>
+             {% set id = info.getId() %}
+             {% set extraId = "" %}
+
+             {% if info.extraIds!=null %}
+
+                 {% set extraId = "?" %}
+
+                 {% for id in info.extraIds %}
+
+                    {% for key,value in id %}
+                        {% set extraId = extraId~key~"="~value %}
+                    {% endfor %}
+
+                     {% if loop.last == false %}
+                        {% set extraId = extraId~"&" %}
+                     {% endif %}
+
+                {% endfor %}
+
+             {% endif %}
+
+
+             {% if image is defined %}
+                 <div class="col6">
+                     {{ include("info/#{ infoTemplate }.info.html.twig") }}
+                 </div>
+                 <div class="col6 last">
+                         <div class="image-frame align-center">
+                             <img src="{{ asset(image) }}" alt="Image" class="{{ imageClass }}"/>
+                         </div>
+                 </div>
+                 {% else %}
+                     <div class="col12">
+                         {{ include("info/#{ infoTemplate }.info.html.twig") }}
+                     </div>
+             {% endif %}
+
+
+
+             <div class='clear'></div>
+             <ul class="file-list">
+                 {% for file in info.getFileElements() %}
+                     {% for key,value in file %}
+                         <li><a href="{{ value }}" target="_blank"  title="Click to download file"><img class="fa" src="{{ asset('images/icons/pdf.png') }}"/>{{ key }}</a></li>
+                     {% endfor %}
+                 {% endfor %}
+             </ul>
+             <div class="space-10"></div>
+
+             <ul class="file-list">
+                 {% for link in info.getLinkElements() %}
+                     <li><a href="{{ path(link['path']) }}{% if link['parameter']!=null%}/{{ link['parameter'] }}{% endif %}{% if extraId!="" %}{{ extraId }}{% endif %}" title="{{ link['name'] }}"><img class="fa" src="{{asset(link['icon']) }}"/>{{ link['name'] }}</a></li>
+                 {% endfor %}
+             </ul>
+
+             <div class="space-10"></div>
+
+             <div class="btn-container">
+                 {% set buttons = info.getButtons() %}
+                 {% set path = path(info.getPath()) %}
+
+                 {% if 'approve' in buttons %}
+                     <a href="{{ path }}/approve/{{ id }}{% if extraId!="" %}{{ extraId }}{% endif %}" class="btn btn-green" title="Click to approve">Approve</a>
+                 {% endif %}
+
+                 {% if 'decline' in buttons %}
+                     <a href="{{ path }}/decline/{{ id }}{% if extraId!="" %}{{ extraId }}{% endif %}" class="btn btn-red" title="Click to decline">Decline</a>
+                 {% endif %}
+
+                 {% if 'active' in buttons %}
+                     <a href="{{ path }}/active/{{ id }}{% if extraId!="" %}{{ extraId }}{% endif %}" class="btn btn-green" title="Click to set active">Activate</a>
+                 {% endif %}
+
+                 {% if 'inactive' in buttons %}
+                     <a href="{{ path }}/inactive/{{ id }}{% if extraId!="" %}{{ extraId }}{% endif %}" class="btn btn-red" title="Click to set inactive">Inactive</a>
+                 {% endif %}
+
+             </div>
+             <div class="space-20"></div>
+
+         </div>
+
+
+     </div>
+
+
+</div>
+    <div class="space-20"></div>
+{% endblock %}
+
+{% block javascripts %}
+     {{ parent() }}
+     <script src="{{ asset('js/ajax.js') }}"></script>
+{% endblock %}
+
