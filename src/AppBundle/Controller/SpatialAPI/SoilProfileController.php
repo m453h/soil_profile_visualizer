@@ -41,4 +41,22 @@ class SoilProfileController extends Controller
         return $response;
     }
 
+    /**
+     * @Route("/spatialAPI/reverse-geocode", options={"expose"=true},name="reverse_geocode")
+     * @param Request $request
+     * @return Response
+     */
+    public function getLocationName(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $latitude = $request->get('latitude');
+        $longitude = $request->get('longitude');
+
+        $response = $em->getRepository('AppBundle:Configuration\SoilType')
+            ->reverseGeocode($latitude,$longitude);
+
+        return new JsonResponse($response);
+    }
+
 }

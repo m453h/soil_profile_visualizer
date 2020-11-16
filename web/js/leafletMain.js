@@ -8,47 +8,11 @@ var defaultSoilDataFields = ['soil_type', 'main_type', 'map_color','level'];
 // control that shows state info on hover
 var info = L.control();
 
-
+var markers = undefined;
 
 $(document).ready(function () {
-
     mapPerspective = 'region-data';
-    $('#region-data').addClass('active');
-
-    $('.map-menu-item').click(function () {
-
-        mapPerspective = $(this).attr('id');
-
-        $(this).addClass('active');
-
-        if (mapPerspective === 'region-data')
-        {
-            $('#district-data').removeClass('active');
-            $('#ward-data').removeClass('active');
-        }
-        else if (mapPerspective === 'district-data')
-        {
-            $('#region-data').removeClass('active');
-            $('#ward-data').removeClass('active');
-        }
-        else if (mapPerspective === 'ward-data')
-        {
-            $('#district-data').removeClass('active');
-            $('#region-data').removeClass('active');
-        }
-
-        //Clear the map and reload
-        map.remove();
-        renderMap('map-render', 'region_spatial_statistics',defaultDataFields, 'country');
-    });
-
-    $('.ward-key').hide();
-    $('.region-key').hide();
-    $('.constituency-key').hide();
-
-
     renderMap('map-render', 'soil_profile_spatial_statistics',defaultSoilDataFields, 'country');
-
 });
 
 
@@ -74,7 +38,7 @@ function renderMap(mapContainerId, route, fields, layerLevel) {
 
         info.update = function (props) {
 
-            this._div.innerHTML = updateStatistics(props);
+            this._div.innerHTML = updateInformation(props);
         };
 
         info.addTo(map);
@@ -92,6 +56,28 @@ function fetchMapData(route, value, fields, layerLevel) {
         },
         success: function (data) {
             sketchMapData(data, fields, layerLevel);
+        },
+        error: function () {
+            alert('Failed');
+        }
+    });
+}
+
+function fetchTextData(e,route, latitude, longitude) {
+    //$('#map-loader').show();
+    console.log(latitude+','+longitude);
+    $.ajax(Routing.generate(route), {
+        data: {
+            latitude: latitude,
+            longitude: longitude
+        },
+        success: function (data) {
+            console.log(data);
+            e.target.feature.properties.region = data.region;
+            e.target.feature.properties.district = data.district;
+            e.target.feature.properties.ward = data.ward;
+
+            info.update(e.target.feature.properties);
         },
         error: function () {
             alert('Failed');
@@ -187,7 +173,6 @@ function sketchMapData(data, fields, layerLevel) {
         wardLayer = mapDataLayer;
         wardLayer.addTo(map);
     }
-
     $('#map-loader').hide();
 }
 
@@ -197,25 +182,16 @@ function highlightFeature(e) {
     layer.setStyle({
         weight: 2,
         color: '#ffffff',
-        dashArray: ''
-        //fillOpacity: 0.4
+        dashArray: '',
+        fillOpacity: 0.4
     });
 
-    info.update(layer.feature.properties);
-
-    //refreshChart(layer.feature.properties);
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
     }
-
-    //info.update(layer.feature.properties);
 }
 
 function resetHighlight(e) {
-
-    $('.ward-key').hide();
-    $('.region-key').hide();
-    $('.district-key').hide();
 
     var layer = e.target;
 
@@ -237,64 +213,44 @@ function resetHighlight(e) {
 function zoomToFeature(e) {
 
     map.fitBounds(e.target.getBounds());
-
+    console.log(e.latlng);
     var layerLevel = e.target.feature.properties.level;
     console.log(e.target.feature.properties);
     var value = null;
     var route = null;
     var fields = [];
+    //console.log(e.latlng.lat+" ,"+e.latlng.lng);
+    addMarker(e);
+   fetchTextData(e,'reverse_geocode',e.latlng.lat, e.latlng.lng);
 
-    if (mapDataType === 'map-render')
+  //  info.update(e.target.feature.properties);
+}
+
+function addMarker(e){
+    if(markers!=undefined)
     {
-        if (layerLevel === 'region')
-        {
-            if(mapPerspective=='region-data')
-            {
-                value = e.target.feature.properties.region_code;
-                route = 'soil_profile_spatial_statistics';
-                fields = defaultRegionSoilDataFields;
-            }
-            else
-            {
-                value = e.target.feature.properties.region_code;
-                route = 'district_spatial_statistics';
-                fields = defaultDistrictFields;
-            }
-        }
-        else if (layerLevel === 'district')
-        {
-            value = e.target.feature.properties.district_code;
-            route = 'ward_spatial_statistics';
-            fields = defaultWardFields;
-        }
-    }
+        markers.remove();
 
-    if (map.hasLayer(districtLayer) && layerLevel === 'region')
-    {
-        map.removeLayer(districtLayer);
     }
+    // Add marker to map at click location; add popup window
+    markers =  L.marker(e.latlng)
+        .bindPopup('<strong>Science Hall</strong><br>Where the GISC was born.')
+        .addTo(map)
+        .openPopup();
 
-    if (map.hasLayer(wardLayer))
-    {
-        map.removeLayer(wardLayer);
-    }
 
-    fetchMapData(route, value, fields, layerLevel);
+
+
 }
 
 function addMapInformationLayer(layer, properties) {
     for (var property in properties) {
-        var html = "";
+        var html = '';
         var fillColor;
-        var featureName = "";
-        var totalCount = properties.active_cases;
-        var recoveredCasesCount = properties.recovered_cases;
-        var fatalCasesCount = properties.fatal_cases;
-        var activeCasesCount = totalCount-recoveredCasesCount-fatalCasesCount;
+        var featureName = '';
         console.log(properties);
 
-        html += property + ": " + properties[property] + "<br>";
-
+        html += property + ': ' + properties[property] + '<br>';
 
         if (typeof properties.map_color == 'undefined')
         {
@@ -304,18 +260,6 @@ function addMapInformationLayer(layer, properties) {
         {
             fillColor = properties.map_color;
         }
-
-        /*if (typeof properties.region_name !== 'undefined')
-        {
-        }
-        else if (typeof properties.district_name !== 'undefined')
-        {
-            fillColor = ;
-        }
-        else if (typeof properties.ward_name !== 'undefined')
-        {
-            fillColor = "#e74c3c";
-        }*/
 
         layer.setStyle({
             fillColor: fillColor,
@@ -336,61 +280,38 @@ function addMapInformationLayer(layer, properties) {
         layer.bindPopup(html);
     }
 
-    function getFillColour(totalCount,activeCasesCount,recoveredCasesCount,fatalCasesCount)
-    {
-        fillColor = "#777777";
-        console.log(mapPerspective+'activeCasesCount:'+activeCasesCount+' recoveredCasesCount:'+recoveredCasesCount+' fatalCasesCount:'+fatalCasesCount);
-
-        if(mapPerspective==='total' && activeCasesCount>0)
-        {
-            fillColor = "#e74c3c";
-        }
-        else if (mapPerspective==='active' && activeCasesCount>0)
-        {
-            fillColor = "#f39c12";
-        }
-        else if (mapPerspective==='recovered' && recoveredCasesCount>0)
-        {
-            fillColor = "#16a085";
-        }
-        else if (mapPerspective==='fatal' && fatalCasesCount>0)
-        {
-            fillColor = "#8e44ad";
-        }
-
-
-        return fillColor;
-    }
-
     function addInformationBox(map){
 
     }
 }
 
-function updateStatistics(props)
+function updateInformation(props)
 {
-    var html ='<h2 class="styled-header">Summary</h2>';
+    var html ='<h2 class="styled-header">Soil Profile</h2>';
 
-    if (typeof props === "undefined")
+    if (typeof props === 'undefined')
     {
-        html += '<p>Hover over a region, to view statistics</p>';
+        html += '<p>Click on the map area, to view more details</p>';
     }
     else
     {
-        var totalActiveCases = props.active_cases;
-        var totalRecoveredCases = props.recovered_cases;
-        var totalFatalCases = props.fatal_cases;
-        var regionName = props.region_name;
+        var soilType = props.soil_type;
+        var mainType = props.main_type;
+        var region = props.region;
+        var district = props.district;
+        var ward = props.ward;
 
-        var html ='<h2 class="styled-header">Summary ('+regionName+')</h2>';
+        var html ='<h2 class="styled-header">Soil Profile</h2>';
 
-        html += getDetailElement('Active',totalActiveCases-totalFatalCases-totalRecoveredCases,'odd')
-            + getDetailElement('Recovered',totalRecoveredCases,'even')
-            + getDetailElement('Fatal',totalFatalCases,'odd')
-            +getDetailElement('Total',totalActiveCases,'total');
+        html += getDetailElement('Type Code',soilType,'odd')
+            + getDetailElement('Main Type',mainType,'even')
+            + getDetailElement('Region',region,'odd')
+            + getDetailElement('District',district,'even')
+            + getDetailElement('Ward',ward,'odd');
 
         html ='<table>'+html+'</table>';
     }
+
 
     return html;
 }

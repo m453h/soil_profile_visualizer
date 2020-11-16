@@ -91,7 +91,7 @@ class SoilTypeRepository extends EntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = "SELECT soil_type,main_type,map_color,'region' AS level,
-                     ST_AsGeoJSON(ST_Transform(geom,4326)) 
+                     ST_AsGeoJSON(ST_Transform(geom,3795)) 
                      FROM spd_tanzania_soil_profile p, cfg_soil_types t
                      WHERE  t.code=p.soil_type";
 
@@ -101,6 +101,25 @@ class SoilTypeRepository extends EntityRepository
         return $stmt->fetchAll();
     }
 
+
+    public function reverseGeocode($latitude,$longitude)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $queryBuilder = new QueryBuilder($conn);
+
+        $queryBuilder->select('region_name AS region','district_name AS district','ward_name AS ward')
+            ->from('spd_tanzania_regions', 'r')
+            ->join('r','spd_tanzania_districts','d','d.region_code=r.region_code')
+            ->join('d','spd_tanzania_wards','w','w.district_code=d.district_code')
+            ->andWhere('ST_Within(ST_SetSRID(ST_MakePoint(:longitude,:latitude),3795),ward_geometry)')
+            ->setParameter('longitude',$longitude)
+            ->setParameter('latitude',$latitude);
+
+        return $queryBuilder
+            ->execute()
+            ->fetch();
+    }
 
 
 
