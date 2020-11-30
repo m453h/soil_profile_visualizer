@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('vendor/jquery-ui-1.12.1/jquery-ui.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui-theme.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <style>
+            body{
+                background:#FFFFFF;
+            }
+        </style>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+
+<body style="height:100%">
+<div id="map-content" class="container" style="height:100%">
+    <div id="map-render" style="height:100%">
+        <div id="map-loader" class="align-center"><img src="{{ asset('images/loaders/ie_loader.gif') }}" alt="Loading"></div>
+    </div>
+</div>
+</body>
+
+
+{% block javascripts %}
+    <script src="{{ asset('vendor/jquery/jquery-1.9.1.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+
+    <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+    <script src="{{ asset('vendor/leaflet/Label.js') }}"></script>
+    <script src="{{ asset('js/leafletMain.js') }}"></script>
+{% endblock %}

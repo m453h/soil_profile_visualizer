@@ -59,4 +59,23 @@ class SoilProfileController extends Controller
         return new JsonResponse($response);
     }
 
+    /**
+     * @Route("/spatialAPI/mobile-map-view",name="mobile_map_view")
+     * @param Request $request
+     * @return Response
+     */
+    public function getMobileMapView(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $latitude = $request->get('latitude');
+        $longitude = $request->get('longitude');
+
+
+        //Render the output
+        return $this->render(
+            'main/api.map.view.html.twig',[]);
+    }
+
+
 }
