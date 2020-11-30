@@ -874,8 +874,7 @@ div.divider {
 	/* -- Form Elements End-- */
 
 div.page-title{
-	box-shadow: 0 0px 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
-	margin: 10px auto;
+	background: none;
 }
 
 
@@ -1100,7 +1099,7 @@ td ul.sub-menu {
 
 ul.breadcrumb{
 	padding:0;
-	margin-left:0;
+	margin-left:-15px;
 }
 
 ul.breadcrumb li{
@@ -1110,7 +1109,7 @@ ul.breadcrumb li{
 
 ul.breadcrumb li a{
 	text-decoration: none;
-	color:#111111;
+	color:#fff;
 }
 
 /* -- Breadcrumb End -- */
