@@ -6,55 +6,10 @@
     {{ parent() }}
 
     {% block dashboard %}
-        <div class="col3 dashboard-stat dash-red">
-            <div class="visual">
-                <i class="fa fa-calculator"></i>
-            </div>
-            <div class="details">
-                <h2 class="data-counter">{{ statistics.Total }}</h2>
-                <p class="desc">Total Cases </p>
-            </div>
-        </div>
-        <div class="col3 dashboard-stat dash-yellow">
-            <div class="visual">
-                <i class="fa fa-medkit"></i>
-            </div>
-            <div class="details">
-                <h2 class="data-counter">{{ statistics.Active }}</h2>
-                <p class="desc">Active Cases </p>
-            </div>
-        </div>
 
 
-        <div class="col3 dashboard-stat dash-green">
-            <div class="visual">
-                <i class="fa fa-check"></i>
-            </div>
-            <div class="details">
-                <h2 class="data-counter">{{ statistics.Recovered }}</h2>
-                <p class="desc">Recovered Cases </p>
-            </div>
-        </div>
-        <div class="col3 dashboard-stat dash-purple last">
-            <div class="visual">
-                <i class="fa fa-times"></i>
-            </div>
-            <div class="details">
-                <h2 class="data-counter">{{ statistics.Fatal }}</h2>
-                <p class="desc">Fatal Cases </p>
-            </div>
-        </div>
 
-        <div class="col12 space-30"></div>
-        <div class="col12">
-            <ul class="app-menu">
-                <li class="fade app-menu-item" id="map-view"><a href="{{ path('app_home_page',{'view':'map'}) }}"><span class="icon-spacer-right"><i class="fa fa-map" aria-hidden="true"></i></span>Map</a></li>
-                <li class="fade app-menu-item" id="graph-view"><a href="{{ path('app_home_page',{'view':'graphs'}) }}"><span class="icon-spacer-right"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>Graphs</a></li>
-                <li class="fade app-menu-item" id="press-view"><a href="{{ path('app_home_page',{'view':'press-releases'}) }}"><span class="icon-spacer-right"><i class="fa fa-bullhorn" aria-hidden="true"></i></span>Press Releases</a></li>
-            </ul>
-        </div>
-
-        <div class="col12 white-space drop-shadow">
+        <div class="col12 white-space drop-shadow" style="margin-top: -100px;">
             <div class="col12">
                 {% include miniTemplate  %}
 

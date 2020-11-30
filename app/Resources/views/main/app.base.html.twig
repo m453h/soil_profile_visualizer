@@ -9,14 +9,19 @@
 {% block body %}
 
     {{ parent() }}
-
+    <div class="col12 dashboard-intro no-mobile">
+        <div class="col12 space"></div>
+        <div class="section-inner">
+            <h1>Welcome !</h1>
+        </div>
+    </div>
     <div class='col12' id="content-horizontal">
         <div class='section-inner'>
-            <div class="page-title white-space col12">
+           <!-- <div class="page-title white-space col12">
                 <div class="container no-mobile" id="nav">
                    {{ knp_menu_render('main', {'template': ':menu:breadcrumb.html.twig'}) }}
                 </div>
-            </div>
+            </div>-->
             <div class="clear"></div>
             {% block content %}{% endblock %}
         </div>

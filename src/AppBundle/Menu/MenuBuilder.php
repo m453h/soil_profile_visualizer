@@ -82,8 +82,6 @@ class MenuBuilder
 
         $menu->addChild('Data', array('uri' => '#', 'extras' => array('icon' => 'file-text-o')))
             ->addChild('Manage Soil Type', array('route' => 'soil_type_list', 'extras' => $this->getCrudLinks('soil_type')))->getParent()
-            ->addChild('Manage Cases', array('route' => 'case_folder_list', 'extras' => $this->getCrudLinks('case_folder')))->getParent()
-            ->addChild('Manage Case Details', array('route' => 'case_detail_list', 'extras' => $this->getCrudLinks('case_detail')))->setDisplay(false)->getParent()
             ->setChildrenAttributes(['class'=>'dropdown'])
             ->getParent();
 
@@ -93,11 +91,6 @@ class MenuBuilder
             ->addChild('Manage accounts', array('route' => 'portal_users_list', 'extras' => $this->getCrudLinks('portal_users')))->getParent()
             ->setChildrenAttributes(['class'=>'dropdown'])
             ->getParent();
-        
-        $menu->addChild('Reports', array('uri' => '#', 'extras' => array('icon' => 'area-chart')))
-            ->addChild('Cases visualization', array('route' => 'results_spatial_visualization'))
-            ->getParent()
-            ->setChildrenAttributes(['class'=>'dropdown']);
 
         return $menu;
     }

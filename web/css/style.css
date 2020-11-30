@@ -1,13 +1,3 @@
-@font-face {
-	font-family: 'Questrial';
-	src: url('../fonts/questrial/questrial-regular-webfont.woff2') format('woff2'),
-	url('../fonts/questrial/questrial-regular-webfont.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-
-
 h1, h2, h3, h4, h5, h6, p {
 	margin: 0;
 	padding: 0;
@@ -19,7 +9,7 @@ p {
 }
 
 body {
-	font-family: 'Questrial', sans-serif;
+	font-family: 'Roboto Condensed', sans-serif;
 	padding: 0;
 	margin: 0;
 	font-size:0.8em;
@@ -1458,7 +1448,7 @@ div.dash-yellow{
 }
 .app-menu{
     float:right;
-    background:#455a64;
+    background:#98654d;
     padding:10px 0;
     margin:0;
 }
@@ -1482,7 +1472,7 @@ div.dash-yellow{
 }
 
 .app-menu li a:hover{
-    background:#53636a;
+    background:#BA7D60;
 }
 
 span.light{
@@ -1535,6 +1525,18 @@ div.month-block{
     padding:11px 0;
     font-size: 2em;
 }
+
+div.dashboard-intro{
+	background: url('../images/backgrounds/wp1950208-soil-wallpapers.jpg') 50% 69%;
+	color:#FFFFFF;
+	height:300px;
+}
+.dashboard-intro h1{
+	font-weight: normal;
+	font-size:3.0em;
+}
+
+
 /** -- Admin Dashboard End -- **/
 
 
@@ -1722,7 +1724,7 @@ span.title{
     }
 
     .sm-oda {
-        background: #455A64;
+        background: #98654d;
     }
 
     .sm-oda a, .sm-oda a:hover{
@@ -1888,7 +1890,7 @@ div#map-render h2{
     padding:5px;
     font-size: 1em;
     color: #fff;
-    background:#34495e;
+    background:#98654D;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }

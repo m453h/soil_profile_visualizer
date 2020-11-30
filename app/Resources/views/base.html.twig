@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width">
     <title>{% block title %}{{ app_name }}{% endblock %}</title>
     {% block stylesheets %}
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset('vendor/jquery-ui-1.12.1/jquery-ui.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/jquery-ui-theme.css') }}">
