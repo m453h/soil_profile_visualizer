@@ -66,7 +66,7 @@ function fetchMapData(route, value, fields, layerLevel) {
 function fetchTextData(e,route, latitude, longitude) {
     //$('#map-loader').show();
     console.log(latitude+','+longitude);
-    $.ajax(Routing.generate(route), {
+    $.ajax(Routing.generate('api_reverse_geocode'), {
         data: {
             latitude: latitude,
             longitude: longitude
