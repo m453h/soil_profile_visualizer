@@ -1,20 +1,14 @@
-var map, districtLayer, wardLayer, mapPerspective, mapDataType;
-var defaultDataFields = ["region_name", "region_code", "level"];
-var defaultDistrictFields = ["region_name","district_name", "district_code", "level", "results", 'active_cases', 'recovered_cases', 'fatal_cases'];
-var defaultWardFields = ["region_name","ward_name", "ward_code", "level", "results", 'active_cases', 'recovered_cases', 'fatal_cases'];
-
+var map, mapPerspective, mapDataType;
 var defaultSoilDataFields = ['soil_type', 'main_type', 'map_color','level'];
 
 // control that shows state info on hover
 var info = L.control();
-
 var markers = undefined;
 
 $(document).ready(function () {
     mapPerspective = 'region-data';
     renderMap('map-render', 'soil_profile_spatial_statistics',defaultSoilDataFields, 'country');
 });
-
 
 function renderMap(mapContainerId, route, fields, layerLevel) {
 
@@ -28,7 +22,6 @@ function renderMap(mapContainerId, route, fields, layerLevel) {
             center: L.latLng(-6.132, 35.092),
             zoom: 7
         });
-
 
         info.onAdd = function (map) {
             this._div = L.DomUtil.create('div', 'info');
@@ -128,7 +121,7 @@ function sketchMapData(data, fields, layerLevel) {
         geoJSON.features.push(feature);
     });
 
-    var mapDataLayer = L.geoJson(geoJSON, {
+   /* var mapDataLayer = L.geoJson(geoJSON, {
         pointToLayer: function (feature, point) {
             var markerStyle = {
                 fillColor: '#CC9900',
@@ -156,23 +149,62 @@ function sketchMapData(data, fields, layerLevel) {
 
         }
 
+    });*/
+    console.log(geoJSON);
+    var vectorGrid = L.vectorGrid.slicer( geoJSON, {
+        rendererFactory: L.canvas.tile,
+        interactive: true,
+        vectorTileLayerStyles: {
+            'sliced': function(properties, zoom) {
+               // console.log(properties);
+                return {
+                    fillColor:properties.map_color,
+                    //fillOpacity: 0.5,
+                    fillOpacity: 1,
+                    stroke: true,
+                    fill: true,
+                    color: 'black',
+                    //opacity: 0.2,
+                    weight: 2
+                }
+            }
+        }
+
     });
 
+    vectorGrid.on("mouseover", function (e) {
+        console.log("mouseover");
+    });
+
+    vectorGrid.on("click", function (e) {
+      //  zoomToFeature(e.layer);
+        console.log(e);
+        //var marker = L.marker(e.latlng).addTo(map);
+        addMarker(e);
+        fetchTextData(e,'reverse_geocode',e.latlng.lat, e.latlng.lng);
+        //console.log(e.layer.properties);
+         var html = updateInformation(e.layer.properties);
+          $('.info.leaflet-control').html(html);
+        // addMapInformationLayer(e.layer,e.layer.properties);
+    });
+
+
+    vectorGrid.addTo(map);
+
+
+
+
+
+
+
+
+    /*
     if (layerLevel === 'country')
     {
         mapDataLayer.addTo(map);
         map.fitBounds(mapDataLayer.getBounds());
     }
-    else if (layerLevel === 'region')
-    {
-        districtLayer = mapDataLayer;
-        districtLayer.addTo(map);
-    }
-    else if (layerLevel === 'district')
-    {
-        wardLayer = mapDataLayer;
-        wardLayer.addTo(map);
-    }
+    */
     $('#map-loader').hide();
 }
 

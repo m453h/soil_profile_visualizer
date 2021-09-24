@@ -42,7 +42,7 @@ class SoilProfileController extends Controller
     }
 
     /**
-     * @Route("/spatialAPI/reverse-geocode", options={"expose"=true},name="reverse_geocode")
+     * @Route("/spatialAPI/reverse-geocode", options={"expose"=true},name="api_reverse_geocode")
      * @param Request $request
      * @return Response
      */
@@ -56,6 +56,15 @@ class SoilProfileController extends Controller
         $response = $em->getRepository('AppBundle:Configuration\SoilType')
             ->reverseGeocode($latitude,$longitude);
 
+        $soilProfile = $em->getRepository('AppBundle:Configuration\SoilType')
+            ->reverseGeocodeSoilProperty($latitude,$longitude);
+
+        if(isset($soilProfile['soil_type']))
+            $response['soil_type'] = $soilProfile['soil_type'];
+
+        if(isset($soilProfile['main_type']))
+            $response['main_type'] = $soilProfile['main_type'];
+
         return new JsonResponse($response);
     }
 
@@ -68,13 +77,19 @@ class SoilProfileController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $latitude = $request->get('latitude');
-        $longitude = $request->get('longitude');
+        $latitude = $request->get('latitude',"-6.3690");
+        $longitude = $request->get('longitude',"34.8888");
 
+        $properties = $em->getRepository('AppBundle:Configuration\SoilType')
+            ->reverseGeocodeSoilProperty($latitude,$longitude);
 
         //Render the output
         return $this->render(
-            'main/api.map.view.html.twig',[]);
+            'main/api.map.view.html.twig',[
+                'latitude'=>$latitude,
+                'longitude'=>$longitude,
+                'properties'=>$properties
+        ]);
     }
 
 

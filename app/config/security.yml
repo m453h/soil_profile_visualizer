@@ -40,4 +40,5 @@ security:
             - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/login_check, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/api.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/spatialAPI.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/.*, roles: IS_AUTHENTICATED_FULLY }

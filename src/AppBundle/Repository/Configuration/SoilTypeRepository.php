@@ -121,6 +121,22 @@ class SoilTypeRepository extends EntityRepository
             ->fetch();
     }
 
+    public function reverseGeocodeSoilProperty($latitude,$longitude)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $queryBuilder = new QueryBuilder($conn);
+
+        $queryBuilder->select('soil_type','main_type')
+            ->from('spd_tanzania_soil_profile', 'r')
+            ->andWhere('ST_Within(ST_SetSRID(ST_MakePoint(:longitude,:latitude),3795),geom)')
+            ->setParameter('longitude',$longitude)
+            ->setParameter('latitude',$latitude);
+
+        return $queryBuilder
+            ->execute()
+            ->fetch();
+    }
 
 
 
