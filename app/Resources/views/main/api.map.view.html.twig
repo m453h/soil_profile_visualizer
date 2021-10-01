@@ -131,17 +131,6 @@
 
         function sketchMapData(data, fields, layerLevel) {
 
-            if (layerLevel === 'country')
-            {
-                //Remove existing map layers
-                map.eachLayer(function (layer) {
-                    //If not the tile layer
-                    if (typeof layer._url === 'undefined') {
-                        map.removeLayer(layer);
-                    }
-                });
-            }
-
             //Create GeoJSON container object
             let geoJSON = {
                 'type': 'FeatureCollection',
@@ -206,18 +195,7 @@
             });
 
             vectorGrid.on("load", function (e) {
-                /*if(isFirstLoad)
-                {
-                    isFirstLoad = false;
 
-                    e.layer = {"properties":{}};
-                    e.layer.properties.soil_type="{{ properties.soil_type }}";
-                    e.layer.properties.main_type="{{ properties.main_type }}";
-                    e.latlng = L.latLng({{ latitude }}, {{ longitude }});
-
-                    addMarker(e);
-                    fetchTextData(e,'reverse_geocode',e.latlng.lat, e.latlng.lng);
-                }*/
             });
 
 

@@ -32,6 +32,20 @@ class SoilType
      */
     private $mapColor;
 
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $potentialUse;
+
+
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $limitations;
+
+
     
     /**
      * @return mixed
@@ -81,8 +95,36 @@ class SoilType
         $this->mapColor = $mapColor;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPotentialUse()
+    {
+        return $this->potentialUse;
+    }
 
+    /**
+     * @param mixed $potentialUse
+     */
+    public function setPotentialUse($potentialUse)
+    {
+        $this->potentialUse = $potentialUse;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getLimitations()
+    {
+        return $this->limitations;
+    }
 
+    /**
+     * @param mixed $limitations
+     */
+    public function setLimitations($limitations)
+    {
+        $this->limitations = $limitations;
+    }
 
 }

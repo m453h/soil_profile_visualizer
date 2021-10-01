@@ -16,7 +16,9 @@ class SoilTypeFormType extends  AbstractType
         $builder
             ->add('name',null,['required'=>true])
             ->add('code',null,['required'=>true])
-            ->add('mapColor',null,['required'=>true]);
+            ->add('mapColor',null,['required'=>true])
+            ->add('potentialUse',null,['required'=>true])
+            ->add('limitations',null,['required'=>true]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

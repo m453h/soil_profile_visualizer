@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('vendor/jquery-ui-1.12.1/jquery-ui.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui-theme.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/font-awesome.min.css') }}">
+
+        <style>
+            body{
+                background:#FFFFFF;
+            }
+        </style>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    <style>
+        body,
+        html
+        {
+            height:100%;
+            border: none;
+        }
+        body{
+            padding:0;
+            margin:0;
+            background:#EEE;
+        }
+
+        span.bolder{
+            font-weight: bolder;
+        }
+        h2.table-header{
+            margin-bottom:5px;
+            color:#406f17;
+        }
+        div.card{
+            background:#FFF;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            margin: 10px auto auto 10px;
+            width:98%;
+            border-radius: 6px 6px 6px 6px;
+        }
+        div.section-outer{
+            width:98%;
+            margin:auto;
+        }
+        div.date-container{
+            float: left;
+            width:72px;
+            padding:15px 0;
+        }
+        div.data-container{
+            float:left;
+            padding-top:30px;
+            font-size:0.9em;
+            width:260px;
+        }
+
+        img.max-100{
+            width:100%;
+            border-radius: 6px 6px 0 0;
+        }
+
+
+
+        div.info-card{
+            margin-bottom: 30px;
+        }
+
+        ol li{
+            margin-bottom: 10px;
+        }
+        div.align-justify{
+            text-align: justify;
+        }
+        img.responsive{
+            border-radius: 6px 6px 0 0;
+        }
+        div.location-name{
+            position: relative;
+            top: -68px;
+            color: #fff;
+            background: #000000bf;
+            height: auto;
+            padding: 10px 0;
+        }
+        .location-name h1{
+            font-size:2em;
+        }
+        .location-name h2{
+            font-size:1.2em;
+        }
+        div.section-inner{
+            width:96%;
+        }
+        .location-name .icon-spacer-right{
+            display: inline-block;
+            float:left;
+        }
+        .location-name .fa{
+            font-size: 3em;
+            padding-top: 3px;
+        }
+        .location-name .details{
+            float:left;
+        }
+        div.additional-details{
+            position: relative;
+            top:-60px;
+        }
+        .additional-details table{
+            width:100%;
+            border-collapse: collapse;
+        }
+        .additional-details table td.name{
+            font-weight:bolder;
+            width:130px;
+        }
+        .additional-details table td{
+            padding:12px 10px;
+            font-size:1.3em;
+            text-align: justify;
+            border-bottom: 1px solid #E7ECF1;
+        }
+        table.data tr th{
+            text-align: left;
+            background:#ba7d60;
+            color:#FFF;
+            text-transform: uppercase;
+        }
+        table.data td, table.data th{
+            padding:12px 10px;
+        }
+
+        table.data td{
+            border-bottom: 1px solid #E7ECF1;;
+        }
+        h2.styled-header{
+            font-weight:lighter;
+            font-size:2.2em;
+            margin-bottom: 14px;
+        }
+        table.data td.name-wide{
+            text-align:center;
+        }
+        table.data th.align-center,table.data td.align-center{
+            text-align:center;
+        }
+        table.data th.align-right,table.data td.align-right{
+            text-align:right;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+<div class="section-outer">
+    <div class="card info-card col12">
+        <img src="{{ asset('images/backgrounds/arusha.jpg') }}" class="responsive"/>
+        <div class="location-name col12">
+            <div class="section-inner">
+                <span class="icon-spacer-right"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                <div class="details">
+                    <h1 class="main-title">Arusha</h1>
+                    <h2 class="main-title">Karatu, Masane</h2>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="additional-details">
+            <div class="section-inner">
+                <table>
+                    <tr>
+                        <td class="name">Soil Type:</td>
+                        <td class="value">Aquaries Stagiation</td>
+                    </tr>
+
+                    <tr>
+                        <td class="name">Potential use:</td>
+                        <td class="value">Suitable for extensive grazing and in some place’s wetland rice</td>
+                    </tr>
+
+                    <tr>
+                        <td class="name">Limitations:</td>
+                        <td class="value">Susceptible to seasonal flooding, high ground water levels and salinity</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Suggested Crops:</td>
+                        <td class="value">Aquaries Stagiation</td>
+                    </tr>
+                </table>
+
+                <div class="space-20"></div>
+                <h2 class="styled-header">Recommended Crops</h2>
+                <div class="space-10"></div>
+                <table class="data">
+                    <tr>
+                        <th>S/N</th>
+                        <th class="align-center">Crop</th>
+                        <th class="align-right">Quantity</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td class="name-wide">
+                            <p>Maize</p>
+                            <img src="{{ asset('images/crops/maize.png') }}" style="width:100px;" alt="Maize"/>
+                        </td>
+                        <td class="value align-right">112,3404<br/>50%</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="name-wide">
+                            <p>Banana</p>
+                            <img src="{{ asset('images/crops/banana.jpg') }}" style="width:100px;" alt="Maize"/>
+                        </td>
+                        <td class="value align-right">23,030 <br/>21%</td>
+                    </tr>
+
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+
+
+{% block javascripts %}
+
+    <script src="{{ asset('vendor/jquery/jquery-1.9.1.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+{% endblock %}

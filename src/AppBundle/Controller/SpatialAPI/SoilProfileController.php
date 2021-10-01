@@ -93,4 +93,30 @@ class SoilProfileController extends Controller
     }
 
 
+    /**
+     * @Route("/spatialAPI/mobile-info-view",name="mobile_info_view")
+     * @param Request $request
+     * @return Response
+     */
+    public function getMobileInfoView(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $latitude = $request->get('latitude',"-6.3690");
+        $longitude = $request->get('longitude',"34.8888");
+
+        $properties = $em->getRepository('AppBundle:Configuration\SoilType')
+            ->reverseGeocodeSoilProperty($latitude,$longitude);
+
+        //Render the output
+        return $this->render(
+            'main/api.info.view.html.twig',[
+            'latitude'=>$latitude,
+            'longitude'=>$longitude,
+            'properties'=>$properties
+        ]);
+    }
+
+
+
 }
