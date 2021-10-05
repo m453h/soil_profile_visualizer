@@ -13,7 +13,6 @@ class CSVFormatVerifier
         {
             if(!in_array($expectedHeader,$availableHeaders))
             {
-
                 return false;
             }
             

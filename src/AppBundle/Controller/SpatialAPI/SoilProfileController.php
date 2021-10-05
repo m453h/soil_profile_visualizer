@@ -108,6 +108,11 @@ class SoilProfileController extends Controller
         $properties = $em->getRepository('AppBundle:Configuration\SoilType')
             ->reverseGeocodeSoilProperty($latitude,$longitude);
 
+        $properties = array_merge($properties,  $em->getRepository('AppBundle:Configuration\SoilType')
+            ->reverseGeocode($latitude,$longitude));
+
+        dump($properties);
+
         //Render the output
         return $this->render(
             'main/api.info.view.html.twig',[

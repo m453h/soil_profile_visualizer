@@ -2,7 +2,10 @@
 
 namespace AppBundle\Controller\Location;
 
+use AppBundle\Entity\Configuration\SoilType;
 use AppBundle\Entity\Location\Region;
+use AppBundle\Form\Configuration\SoilTypeFormType;
+use AppBundle\Form\Location\RegionFormType;
 use Pagerfanta\Adapter\DoctrineDbalAdapter;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -55,7 +58,7 @@ class RegionController extends Controller
         $grid->addGridHeader('Actions',null,'action');
         $grid->setStartIndex($page,$maxPerPage);
         $grid->setPath('region_list');
-        $grid->setSecondaryPath('region_list');
+        $grid->setSecondaryPath('crops_in_region_list');
         $grid->setCurrentObject($class);
         $grid->setButtons();
         
@@ -67,6 +70,44 @@ class RegionController extends Controller
                 'title'=>'Existing Regions',
                 'gridTemplate'=>'lists/base.list.html.twig'
         ));
+    }
+
+    /**
+     * @Route("/administration/regions/edit/{regionCode}", name="region_edit")
+     * @param Request $request
+     * @param Region $region
+     * @return Response
+     */
+    public function editAction(Request $request, Region $region)
+    {
+        $this->denyAccessUnlessGranted('edit', get_class($this));
+
+        $form = $this->createForm(RegionFormType::class,$region);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $region = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($region);
+            $em->flush();
+
+            $this->addFlash('success', 'Region successfully updated!');
+
+            return $this->redirectToRoute('region_list');
+        }
+
+        return $this->render(
+            'main/app.form.html.twig',
+            array(
+                'formTemplate'=>'location/region',
+                'form'=>$form->createView(),
+                'title'=>'Region Details'
+            )
+
+        );
     }
 
 

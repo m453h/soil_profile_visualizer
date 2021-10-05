@@ -3,7 +3,7 @@
 namespace AppBundle\Controller\Location;
 
 use AppBundle\Entity\Configuration\Country;
-use AppBundle\Form\Location\CountryFormType;
+use AppBundle\Form\Location\RegionFormType;
 use AppBundle\Helpers\GridBuilder;
 use Pagerfanta\Adapter\DoctrineDbalAdapter;
 use Pagerfanta\Pagerfanta;
@@ -84,7 +84,7 @@ class CountryController extends Controller
 
         $this->denyAccessUnlessGranted('add',$class);
 
-        $form = $this->createForm(CountryFormType::class);
+        $form = $this->createForm(RegionFormType::class);
 
         // only handles data on POST
         $form->handleRequest($request);
@@ -125,7 +125,7 @@ class CountryController extends Controller
 
         $this->denyAccessUnlessGranted('edit',$class);
 
-        $form = $this->createForm(CountryFormType::class,$country);
+        $form = $this->createForm(RegionFormType::class,$country);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

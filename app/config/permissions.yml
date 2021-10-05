@@ -1,12 +1,7 @@
 Location:
-    Country:
-      roleClass: AppBundle\Controller\Location\CountryController
-      actions: ["view","add","edit","delete"]
-      key: country
-
     Region:
       roleClass: AppBundle\Controller\Location\RegionController
-      actions: ["view"]
+      actions: ["view","edit","more"]
       key: region
 
     District:
@@ -19,25 +14,16 @@ Location:
       actions: ["view"]
       key: ward
 
-    Nationality:
-      roleClass: AppBundle\Controller\Configuration\NationalityController
-      actions: ["view","add","edit","delete"]
-      key: nationality
-
-
-
-
 Data:
-    CaseFolder:
-      roleClass: AppBundle\Controller\Data\CaseFolderController
-      actions: ["view","add","edit","delete","more"]
-      key: case-folder
-
-    CaseFolderDetails:
-      roleClass: AppBundle\Controller\Data\CaseDetailsController
+    SoilType:
+      roleClass: AppBundle\Controller\Configuration\SoilTypeController
       actions: ["view","add","edit","delete"]
-      key: case-folder-details
+      key: soil-type
 
+    CropsInRegion:
+      roleClass: AppBundle\Controller\Data\CropsInRegionController
+      actions: [ "view","add","edit","delete","bulk-upload" ]
+      key: crops-in-region
 
 Accounts:
     Users:

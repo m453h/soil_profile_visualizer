@@ -108,7 +108,7 @@ class SoilTypeRepository extends EntityRepository
 
         $queryBuilder = new QueryBuilder($conn);
 
-        $queryBuilder->select('region_name AS region','district_name AS district','ward_name AS ward')
+        $queryBuilder->select('region_name AS region','district_name AS district','ward_name AS ward','recommended_crops')
             ->from('spd_tanzania_regions', 'r')
             ->join('r','spd_tanzania_districts','d','d.region_code=r.region_code')
             ->join('d','spd_tanzania_wards','w','w.district_code=d.district_code')
@@ -127,8 +127,9 @@ class SoilTypeRepository extends EntityRepository
 
         $queryBuilder = new QueryBuilder($conn);
 
-        $queryBuilder->select('soil_type','main_type')
+        $queryBuilder->select('soil_type','main_type','potential_use','limitations')
             ->from('spd_tanzania_soil_profile', 'r')
+            ->leftJoin('r','cfg_soil_types','slt','slt.code=r.soil_type')
             ->andWhere('ST_Within(ST_SetSRID(ST_MakePoint(:longitude,:latitude),3795),geom)')
             ->setParameter('longitude',$longitude)
             ->setParameter('latitude',$latitude);
@@ -137,16 +138,6 @@ class SoilTypeRepository extends EntityRepository
             ->execute()
             ->fetch();
     }
-
-
-
-
-
-
-
-
-
-
 
     public function setSpatialFilterOptions($options, QueryBuilder $queryBuilder)
     {

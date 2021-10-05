@@ -147,7 +147,7 @@
             margin-bottom: 14px;
         }
         table.data td.name-wide{
-            text-align:center;
+            text-align:left;
         }
         table.data th.align-center,table.data td.align-center{
             text-align:center;
@@ -164,13 +164,13 @@
 
 <div class="section-outer">
     <div class="card info-card col12">
-        <img src="{{ asset('images/backgrounds/arusha.jpg') }}" class="responsive"/>
+        <img src="{{ asset('images/backgrounds/zanzibar.jpg') }}" class="responsive"/>
         <div class="location-name col12">
             <div class="section-inner">
                 <span class="icon-spacer-right"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
                 <div class="details">
-                    <h1 class="main-title">Arusha</h1>
-                    <h2 class="main-title">Karatu, Masane</h2>
+                    <h1 class="main-title">{{ properties.region }}</h1>
+                    <h2 class="main-title">{{ properties.district }}, {{ properties.ward }}</h2>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -180,52 +180,25 @@
                 <table>
                     <tr>
                         <td class="name">Soil Type:</td>
-                        <td class="value">Aquaries Stagiation</td>
+                        <td class="value">{{ properties.main_type }}</td>
                     </tr>
 
                     <tr>
                         <td class="name">Potential use:</td>
-                        <td class="value">Suitable for extensive grazing and in some place’s wetland rice</td>
+                        <td class="value">{{ properties.potential_use }}</td>
                     </tr>
 
                     <tr>
                         <td class="name">Limitations:</td>
-                        <td class="value">Susceptible to seasonal flooding, high ground water levels and salinity</td>
+                        <td class="value">{{ properties.limitations }}</td>
                     </tr>
                     <tr>
                         <td class="name">Suggested Crops:</td>
-                        <td class="value">Aquaries Stagiation</td>
+                        <td class="value">{{ properties.recommended_crops }}</td>
                     </tr>
                 </table>
 
                 <div class="space-20"></div>
-                <h2 class="styled-header">Recommended Crops</h2>
-                <div class="space-10"></div>
-                <table class="data">
-                    <tr>
-                        <th>S/N</th>
-                        <th class="align-center">Crop</th>
-                        <th class="align-right">Quantity</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td class="name-wide">
-                            <p>Maize</p>
-                            <img src="{{ asset('images/crops/maize.png') }}" style="width:100px;" alt="Maize"/>
-                        </td>
-                        <td class="value align-right">112,3404<br/>50%</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td class="name-wide">
-                            <p>Banana</p>
-                            <img src="{{ asset('images/crops/banana.jpg') }}" style="width:100px;" alt="Maize"/>
-                        </td>
-                        <td class="value align-right">23,030 <br/>21%</td>
-                    </tr>
-
-
-                </table>
             </div>
 
         </div>

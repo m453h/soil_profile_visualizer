@@ -25,8 +25,7 @@ class MainController extends Controller
         $template = 'main/app.main.dashboard.html.twig';
 
         $em = $this->getDoctrine()->getManager();
-        $statistics = $em->getRepository('AppBundle:Data\CaseFolder')
-            ->getStatistics();
+
 
         $view = $request->get('view');
 
@@ -45,11 +44,6 @@ class MainController extends Controller
         {
             $miniTemplate = 'dashboard/graph.view.html.twig';
 
-            $data = $em->getRepository('AppBundle:Data\CaseFolder')
-                ->getDailyStatistics();
-
-            $this->get('app.helper.audit_trail_logger')
-                ->logUserAction('DASHBOARD\GRAPHS','LOGIN',null,null);
         }
         else if($view=='press-releases')
         {
@@ -86,7 +80,7 @@ class MainController extends Controller
         return $this->render(
             $template,
             [
-                'statistics'=>$statistics,
+                'statistics'=>[],
                 'miniTemplate'=>$miniTemplate,
                 'extra'=>$data,
                 'view'=>$view

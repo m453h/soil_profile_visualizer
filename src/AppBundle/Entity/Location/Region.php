@@ -33,7 +33,18 @@ class Region
      */
     private $regionName;
 
-    
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $recommendedCrops;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $regionImage;
+
+
+
     /**
      * @ORM\Column(name="region_geometry", type="geometry", options={"geometry_type"="MULTIPOLYGON", "srid"=3795}, nullable=true)
      */
@@ -103,5 +114,38 @@ class Region
     {
         $this->gid = $gid;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRecommendedCrops()
+    {
+        return $this->recommendedCrops;
+    }
+
+    /**
+     * @param mixed $recommendedCrops
+     */
+    public function setRecommendedCrops($recommendedCrops)
+    {
+        $this->recommendedCrops = $recommendedCrops;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegionImage()
+    {
+        return $this->regionImage;
+    }
+
+    /**
+     * @param mixed $regionImage
+     */
+    public function setRegionImage($regionImage)
+    {
+        $this->regionImage = $regionImage;
+    }
+
 
 }
