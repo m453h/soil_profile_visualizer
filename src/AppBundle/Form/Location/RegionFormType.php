@@ -13,9 +13,7 @@ class RegionFormType extends  AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('recommendedCrops',null,['required'=>true])
-            ->add('regionImage',null,['required'=>true]);
+       // $builder
     }
 
     public function configureOptions(OptionsResolver $resolver)

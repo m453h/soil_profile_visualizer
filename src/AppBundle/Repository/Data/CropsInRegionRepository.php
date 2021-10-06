@@ -102,5 +102,33 @@ class CropsInRegionRepository extends EntityRepository
 
     }
 
+    /**
+     * @param $regionCode
+     * @return string
+     */
+    public function getTopCropsInRegion($regionCode)
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $queryBuilder = new QueryBuilder($conn);
+        $results = $queryBuilder->select('crop_name')
+            ->from('tbl_crops_in_region', 'c')
+            ->andWhere('region_code=:regionCode')
+            ->addOrderBy('harvested_area','DESC')
+            ->setMaxResults(10)
+            ->setParameter('regionCode',$regionCode)
+            ->execute()
+            ->fetchAll();
+
+        $data = [];
+        foreach ($results as $crop)
+        {
+          array_push($data,$crop['crop_name']);
+        }
+
+        return implode($data,', ');
+    }
+
 
 }

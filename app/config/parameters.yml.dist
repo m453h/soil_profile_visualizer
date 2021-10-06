@@ -25,4 +25,6 @@ parameters:
     #The maximum number of elements to be displayed by the grid view
     grid_per_page_limit:    10
     permissions_file: '%kernel.root_dir%/config/permissions.yml'
+    region_images_directory: '%kernel.root_dir%/../web/file_uploads/region_images_upload'
+
 

@@ -10,6 +10,7 @@ use Pagerfanta\Adapter\DoctrineDbalAdapter;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -86,6 +87,8 @@ class RegionController extends Controller
 
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $region = $form->getData();
@@ -95,15 +98,21 @@ class RegionController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Region successfully updated!');
-
             return $this->redirectToRoute('region_list');
         }
+
+        if ($region->getRegionImage() != null)
+            $uploadedPhoto = 'file_uploads/region_images_upload/' . $region->getRegionImage();
+        else
+            $uploadedPhoto = null;
+
 
         return $this->render(
             'main/app.form.html.twig',
             array(
                 'formTemplate'=>'location/region',
                 'form'=>$form->createView(),
+                'uploadedPhoto'=>$uploadedPhoto,
                 'title'=>'Region Details'
             )
 
@@ -111,5 +120,41 @@ class RegionController extends Controller
     }
 
 
-    
+    /**
+     * @Route("/administration/upload-region-image", name="upload_region_image")
+     * @param Request $request
+     * @return Response
+     */
+    public function uploadImageAction(Request $request){
+        $uploadPath = $this->getParameter('region_images_directory');
+        $uploader = $this->get('app.helper.image_uploader');
+        $uploader->setUploadPath($uploadPath);
+        $response = $uploader->uploadImage();
+        $regionCode = $request->get('regionCode');
+
+        if($response['status']=='success')
+        {
+
+            $fileName = $response['fileName'];
+            $em = $this->getDoctrine()->getManager();
+            $region = $em->getRepository('AppBundle:Location\Region')
+                ->findOneBy(['regionCode'=>$regionCode]);
+
+
+            if ($region instanceof Region)
+            {
+                $oldFile = $region->getRegionImage();
+                $region->setRegionImage($fileName);
+                $em->persist($region);
+                $em->flush();
+
+                //Delete the old Image
+                $uploader->deleteImage($oldFile);
+            }
+        }
+
+        return new JsonResponse($response);
+    }
+
+
 }

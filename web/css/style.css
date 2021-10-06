@@ -765,7 +765,7 @@ div#loader{
 	display:none;
 }
 .imageBoxAction{
-	width:252px;
+	width: 669px;
 }
 .imageBoxAction button{
 	float:right
@@ -777,19 +777,20 @@ div#loader{
 .imageBox
 {
 	position: relative;
-	height: 250px;
-	width: 250px;
+	width: 669px;
+	height: 446px;
 	overflow: hidden;
 	background: #fff no-repeat;
 	cursor:move;
 	margin-bottom:10px;
+	margin-left: -7px;
 }
 
 .imageBox .thumbBox
 {
 	position: absolute;
-	width: 250px;
-	height: 250px;
+	width: 669px;
+	height: 446px;
 	box-sizing: border-box;
 	border: 1px solid #cecece;
 	box-shadow: rgba(0,0,0,.25) 0 4px 5px -5px inset;

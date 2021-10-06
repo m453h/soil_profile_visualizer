@@ -141,6 +141,7 @@ $(document).ready(function() {
 
 		$('#btnCrop').on('click', function () {
 			var img = cropper.getDataURL();
+			var regionCode = $('#imageUploadBox').attr('data-primary-identifier');
 
 			$('#loader').show();
 
@@ -148,7 +149,7 @@ $(document).ready(function() {
 			$.ajax({
 				type: 'POST',
 				url: imageUploadPath,
-				data: {image: img},
+				data: {image: img, regionCode: regionCode},
 				dataType: 'json',
 				success: function (data) {
 					$('#loader').hide();

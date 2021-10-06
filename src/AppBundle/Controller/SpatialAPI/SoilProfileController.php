@@ -111,8 +111,10 @@ class SoilProfileController extends Controller
         $properties = array_merge($properties,  $em->getRepository('AppBundle:Configuration\SoilType')
             ->reverseGeocode($latitude,$longitude));
 
-        dump($properties);
+        $crops = $em->getRepository('AppBundle:Data\CropsInRegion')
+            ->getTopCropsInRegion($properties['region_code']);
 
+        $properties['recommended_crops'] = $crops;
         //Render the output
         return $this->render(
             'main/api.info.view.html.twig',[

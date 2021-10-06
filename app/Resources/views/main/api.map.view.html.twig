@@ -191,6 +191,7 @@
             vectorGrid.on("click", function (e) {
                 addMarker(e);
                 //console.log(e);
+                AndroidFunction.tagLocation(e.latlng.lat+","+ e.latlng.lng);
                 fetchTextData(e,'reverse_geocode',e.latlng.lat, e.latlng.lng);
             });
 
@@ -299,6 +300,7 @@
             e.latlng = L.latLng(latitude, longitude);
 
             addMarker(e);
+            AndroidFunction.tagLocation(e.latlng.lat+","+ e.latlng.lng);
             fetchTextData(e,'reverse_geocode',e.latlng.lat, e.latlng.lng);
             map.flyTo([e.latlng.lat, e.latlng.lng]);
         }

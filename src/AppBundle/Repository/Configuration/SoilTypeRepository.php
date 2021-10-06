@@ -108,7 +108,7 @@ class SoilTypeRepository extends EntityRepository
 
         $queryBuilder = new QueryBuilder($conn);
 
-        $queryBuilder->select('region_name AS region','district_name AS district','ward_name AS ward','recommended_crops')
+        $queryBuilder->select('r.region_code','region_name AS region','district_name AS district','ward_name AS ward','recommended_crops','region_image')
             ->from('spd_tanzania_regions', 'r')
             ->join('r','spd_tanzania_districts','d','d.region_code=r.region_code')
             ->join('d','spd_tanzania_wards','w','w.district_code=d.district_code')
