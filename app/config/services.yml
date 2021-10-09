@@ -4,10 +4,6 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-services:
     app.menu_builder:
         class: AppBundle\Menu\MenuBuilder
         autowire: true
@@ -63,6 +59,10 @@ services:
     app.helper.audit_trail_logger:
         class: AppBundle\Helpers\AuditTrailLogger
         autowire: true
+
+    app.helper.array_parser:
+      class: AppBundle\Helpers\ArrayParser
+      autowire: true
 
     app.acl_voter:
             class: AppBundle\Security\ACLVoter

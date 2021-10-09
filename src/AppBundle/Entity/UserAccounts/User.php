@@ -64,6 +64,17 @@ class User implements  UserInterface,EquatableInterface,\Serializable
     private $loginTries;
 
     /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $isCustomer;
+
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $token;
+
+    /**
      * @ORM\Column(type="string")
      */
     private $password;
@@ -88,6 +99,16 @@ class User implements  UserInterface,EquatableInterface,\Serializable
      * @ORM\Column(type="string", nullable=true)
      */
     private $authenticationToken;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastTokenRequest;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $installIdentifier;
     
     private $givenNames;
     
@@ -382,5 +403,87 @@ class User implements  UserInterface,EquatableInterface,\Serializable
     {
         $this->plainPasswordConfirm = $plainPasswordConfirm;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUserRole()
+    {
+        return $this->userRole;
+    }
+
+    /**
+     * @param ArrayCollection $userRole
+     */
+    public function setUserRole($userRole)
+    {
+        $this->userRole = $userRole;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsCustomer()
+    {
+        return $this->isCustomer;
+    }
+
+    /**
+     * @param mixed $isCustomer
+     */
+    public function setIsCustomer($isCustomer)
+    {
+        $this->isCustomer = $isCustomer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastTokenRequest()
+    {
+        return $this->lastTokenRequest;
+    }
+
+    /**
+     * @param mixed $lastTokenRequest
+     */
+    public function setLastTokenRequest($lastTokenRequest)
+    {
+        $this->lastTokenRequest = $lastTokenRequest;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstallIdentifier()
+    {
+        return $this->installIdentifier;
+    }
+
+    /**
+     * @param mixed $installIdentifier
+     */
+    public function setInstallIdentifier($installIdentifier)
+    {
+        $this->installIdentifier = $installIdentifier;
+    }
+
+
 
 }

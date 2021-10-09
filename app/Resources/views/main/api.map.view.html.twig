@@ -260,7 +260,7 @@
 
         function updateInformation(props)
         {
-            let html = '<h2 class="styled-header">Soil Profile</h2>';
+            let html = '<h2 class="styled-header">Soil Type</h2>';
 
             if (typeof props === 'undefined')
             {
@@ -274,7 +274,7 @@
                 let district = props.district;
                 let ward = props.ward;
 
-                html = '<h2 class="styled-header">Soil Profile</h2>';
+                html = '<h2 class="styled-header">Soil Type</h2>';
 
                 html += getDetailElement('Type Code',soilType,'odd')
                     + getDetailElement('Main Type',mainType,'even')

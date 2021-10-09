@@ -42,9 +42,8 @@
         div.card{
             background:#FFF;
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-            margin: 10px auto auto 10px;
-            width:98%;
             border-radius: 6px 6px 6px 6px;
+
         }
         div.section-outer{
             width:98%;
@@ -70,7 +69,7 @@
 
 
         div.info-card{
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         ol li{
@@ -142,19 +141,46 @@
             border-bottom: 1px solid #E7ECF1;;
         }
         h2.styled-header{
-            font-weight:lighter;
-            font-size:2.2em;
-            margin-bottom: 14px;
+            font-size:1.0em;
+            margin:10px 0 5px 0;
+            font-weight:bolder;
+            color:#9e6b52;
         }
-        table.data td.name-wide{
-            text-align:left;
+
+        p.date-added{
+            font-weight: bolder;
+            color:#408a2d;
+            text-transform: uppercase;
+            font-style: italic;
+            font-size:0.75em;
+            padding:0;
+            margin:0 0 5px 0;
         }
-        table.data th.align-center,table.data td.align-center{
-            text-align:center;
+
+        p.details{
+            margin:0;
+            padding-bottom:10px;
+            font-style: italic;
+            font-size:0.8em;
+            color:#555;
         }
-        table.data th.align-right,table.data td.align-right{
-            text-align:right;
+        @media all and (max-width: 768px) {
+            .col6 {
+                width: 49.2%;
+            }
+
+            .col6 {
+                float: left;
+                margin: 0 1.6% 0 0;
+            }
+
+            .col1.last, .col2.last, .col3.last, .col4.last, .col5.last, .col6.last, .col7.last, .col8.last, .col9.last, .col10.last, .col11.last, .col12 {
+                margin: 0;
+            }
+
         }
+
+
     </style>
 
 
@@ -163,55 +189,34 @@
 <body>
 
 <div class="section-outer">
-    <div class="card info-card col12">
-        {% if properties.region_image==null %}
-            {% set image = 'file_uploads/region_images_upload/default.jpg' %}
-        {% else %}
-            {% set image = 'file_uploads/region_images_upload/'~record.region_image %}
-        {% endif %}
+    <div class="space-10"></div>
+    {% for record in records %}
+    <a href="{{ path('mobile_info_view',{'latitude':record.latitude,'longitude':record.longitude}) }}"
+       data-latitude="{{ record.latitude }}"
+       data-longitude="{{ record.longitude }}">
+        <div class="card info-card col6 {% if (loop.index is even) %}last{% endif %}">
+            <div class="col12">
+                {% if record.region_image==null %}
+                    {% set image = 'file_uploads/region_images_upload/default.jpg' %}
+                {% else %}
+                    {% set image = 'file_uploads/region_images_upload/'~record.region_image %}
+                {% endif %}
+                <img src="{{ asset(image) }}" class="responsive" alt="{{ record.region_name }}"/>
+            </div>
 
-        <img src="{{ asset(image) }}" class="responsive"/>
-        <div class="location-name col12">
             <div class="section-inner">
-                <span class="icon-spacer-right"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-                <div class="details">
-                    <h1 class="main-title">{{ properties.region }}</h1>
-                    <h2 class="main-title">{{ properties.district }}, {{ properties.ward }}</h2>
+                <div class="col12">
+                    <h2 class="styled-header">{{ record.region_name }}</h2>
+                    <p class="date-added">Added on 21/02/3030</p>
+                    <p class="details">Soil Type: {{ record.soil_type }}, District: {{ record.district_name }}, Ward: {{ record.ward_name }}</p>
                 </div>
-                <div class="clear"></div>
             </div>
         </div>
-        <div class="additional-details">
-            <div class="section-inner">
-                <table>
-                    <tr>
-                        <td class="name">Soil Type:</td>
-                        <td class="value">{{ properties.main_type }}</td>
-                    </tr>
-
-                    <tr>
-                        <td class="name">Potential use:</td>
-                        <td class="value">{{ properties.potential_use }}</td>
-                    </tr>
-
-                    <tr>
-                        <td class="name">Limitations:</td>
-                        <td class="value">{{ properties.limitations }}</td>
-                    </tr>
-                    <tr>
-                        <td class="name">Suggested Crops:</td>
-                        <td class="value">{{ properties.recommended_crops }}</td>
-                    </tr>
-                </table>
-
-                <div class="space-20"></div>
-
-            </div>
-
-        </div>
-
-    </div>
+    </a>
+    {% endfor %}
 </div>
+<div class="space co12 clear"></div>
+
 </body>
 
 
@@ -221,5 +226,15 @@
     <script src="{{ asset('vendor/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("a").click(function() {
+                let longitude = $(this).data("longitude")
+                let latitude = $(this).data("latitude")
+                AndroidFunction.launchInfoFragment();
+            });
+        });
 
+
+    </script>
 {% endblock %}
