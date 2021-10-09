@@ -167,7 +167,7 @@
         {% if properties.region_image==null %}
             {% set image = 'file_uploads/region_images_upload/default.jpg' %}
         {% else %}
-            {% set image = 'file_uploads/region_images_upload/'~record.region_image %}
+            {% set image = 'file_uploads/region_images_upload/'~properties.region_image %}
         {% endif %}
 
         <img src="{{ asset(image) }}" class="responsive"/>
